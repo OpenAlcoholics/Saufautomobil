@@ -17,11 +17,12 @@ class RulesContent extends StatelessWidget {
           );
         } else {
           return ListView.builder(
-              itemCount: rules.length,
-              itemBuilder: (context, index) {
-                final rule = rules[index];
-                return RuleCard(rule);
-              });
+            itemCount: rules.length,
+            itemBuilder: (context, index) {
+              final rule = rules[index];
+              return RuleCard(rule);
+            },
+          );
         }
       },
     );
