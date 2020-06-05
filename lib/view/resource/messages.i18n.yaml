@@ -1,6 +1,7 @@
 common:
   retry: Erneut versuchen
   pleaseWait: Bitte warten
+  genericError: Ein Fehler ist aufgetreten
   errorBlank: Darf nicht leer sein
 
 page:

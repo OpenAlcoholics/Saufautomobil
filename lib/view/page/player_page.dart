@@ -1,4 +1,5 @@
 import 'package:sam/data/dependency_model.dart';
+import 'package:sam/domain/tasks/tasks_service.dart';
 import 'package:sam/domain/tasks/tasks_state.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/widget/loading_indicator.dart';
@@ -13,6 +14,7 @@ class PlayerPage extends StatelessWidget {
       ),
       body: StatefulStreamBuilder(
         stream: service<TasksState>().tasks,
+        refresh: service<TasksService>().updateTasks,
         builder: (context, _, value) {
           if (value == null) {
             return LoadingIndicator();
