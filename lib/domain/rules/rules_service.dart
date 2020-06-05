@@ -1,8 +1,13 @@
 import 'package:sam/data/dependency_model.dart';
-import 'package:sam/domain/game/rule.dart';
+import 'package:sam/domain/rules/rule.dart';
 import 'package:sam/domain/rules/rules_state.dart';
 
 class RulesService {
+  Future<void> loadRules() async {
+    final state = service<RulesState>().activeRules;
+    state.addValue([]);
+  }
+
   Future<void> addRule(Rule rule) async {
     final state = service<RulesState>().activeRules;
     final previous = state.lastValue?.toList() ?? <Rule>[];

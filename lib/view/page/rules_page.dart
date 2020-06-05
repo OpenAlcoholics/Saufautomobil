@@ -1,6 +1,7 @@
 import 'package:sam/view/common.dart';
 import 'package:sam/view/widget/bottom_navigation/bottom_bar.dart';
 import 'package:sam/view/widget/overflow/menu.dart';
+import 'package:sam/view/widget/rules/rules_content.dart';
 import 'package:sam/view/widget/rules/rules_controller.dart';
 
 class RulesPage extends StatelessWidget {
@@ -14,7 +15,7 @@ class RulesPage extends StatelessWidget {
           title: Text(context.messages.page.rules),
           actions: [SamOverflowMenu()],
         ),
-        body: Text("SUCK ON THIS"),
+        body: RulesContent(),
         bottomNavigationBar: SamBottomNavigationBar(
           activePage: SamPage.rules,
         ),
