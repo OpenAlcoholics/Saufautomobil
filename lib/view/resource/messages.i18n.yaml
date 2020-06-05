@@ -1,0 +1,12 @@
+common:
+  retry: Erneut versuchen
+  pleaseWait: Bitte warten
+  errorBlank: Darf nicht leer sein
+
+page:
+  player: Spieler wählen
+  game: Saufautomobil
+
+dialog:
+  ok: OK
+  cancel: Abbrechen
