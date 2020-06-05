@@ -17,7 +17,6 @@ class RuleCard extends StatelessWidget {
           maxLines: 2,
         ),
         subtitle: Text(rule.player),
-        isThreeLine: true,
         // TODO actually calculate
         trailing: Text(
           "0",
