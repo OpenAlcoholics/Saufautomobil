@@ -3,10 +3,16 @@ common:
   pleaseWait: Bitte warten
   genericError: Ein Fehler ist aufgetreten
   errorBlank: Darf nicht leer sein
+  submit: Weiter
+  dismiss: Ausblenden
 
 page:
   player: Spieler wählen
   game: Saufautomobil
+
+player:
+  nameInputHint: Spielernamen eingeben
+  duplicate: Spieler existiert bereits!
 
 dialog:
   ok: OK

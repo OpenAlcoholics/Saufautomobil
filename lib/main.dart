@@ -34,6 +34,11 @@ class MyApp extends StatelessWidget {
             bodyColor: SamColors.primaryText,
           ),
           primaryColor: SamColors.primary,
+          accentColor: SamColors.accent,
+          snackBarTheme: SnackBarThemeData(
+            actionTextColor: SamColors.primary,
+          ),
+          accentTextTheme: Typography.whiteMountainView,
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
           // closer together (more dense) than on mobile platforms.
