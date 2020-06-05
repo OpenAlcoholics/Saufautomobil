@@ -38,6 +38,9 @@ class MyApp extends StatelessWidget {
           snackBarTheme: SnackBarThemeData(
             actionTextColor: SamColors.primary,
           ),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            selectedItemColor: Colors.orangeAccent,
+          ),
           accentTextTheme: Typography.whiteMountainView,
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and

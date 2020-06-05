@@ -12,6 +12,11 @@ page:
   game: Saufautomobil
   gameOngoing(int taskCount): $game | Aufgabe $taskCount
 
+bottom:
+  game: Spiel
+  rules: Aktive Aufgaben
+  players: Spieler
+
 action:
   editPlayers: Spieler bearbeiten
 
