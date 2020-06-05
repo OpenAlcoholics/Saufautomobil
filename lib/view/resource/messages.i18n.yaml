@@ -9,8 +9,13 @@ common:
 
 page:
   player: Spieler wählen
+  rules: Aktive Regeln
   game: Saufautomobil
   gameOngoing(int taskCount): $game | Aufgabe $taskCount
+
+rules:
+  noActive: Keine aktiven Regeln
+  remainingRounds(int rounds): "Verbleibende Runden: $rounds"
 
 bottom:
   game: Spiel
@@ -19,6 +24,7 @@ bottom:
 
 action:
   editPlayers: Spieler bearbeiten
+  resetGame: Neues Spiel starten
 
 player:
   nameInputHint: Spielernamen eingeben

@@ -1,23 +1,22 @@
 import 'package:sam/view/common.dart';
 import 'package:sam/view/widget/bottom_navigation/bottom_bar.dart';
-import 'package:sam/view/widget/game/game_controller.dart';
-import 'package:sam/view/widget/game/game_title.dart';
 import 'package:sam/view/widget/overflow/menu.dart';
+import 'package:sam/view/widget/rules/rules_controller.dart';
 
-class GamePage extends StatelessWidget {
+class RulesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (_) => GameController(),
+      create: (_) => RulesController(),
       dispose: (_, it) => it.dispose(),
       child: Scaffold(
         appBar: AppBar(
-          title: GameTitle(),
+          title: Text(context.messages.page.rules),
           actions: [SamOverflowMenu()],
         ),
-        body: Text("GAME ON"),
+        body: Text("SUCK ON THIS"),
         bottomNavigationBar: SamBottomNavigationBar(
-          activePage: SamPage.game,
+          activePage: SamPage.rules,
         ),
       ),
     );

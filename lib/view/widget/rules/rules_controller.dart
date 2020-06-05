@@ -1,0 +1,5 @@
+class RulesController {
+  void dispose() {
+
+  }
+}

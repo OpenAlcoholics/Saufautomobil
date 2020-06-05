@@ -1,8 +1,13 @@
+import 'package:badges/badges.dart';
+import 'package:sam/data/dependency_model.dart';
+import 'package:sam/domain/rules/rules_state.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/page/game_page.dart';
 import 'package:sam/view/page/player_page.dart';
+import 'package:sam/view/page/rules_page.dart';
 import 'package:sam/view/resource/messages.i18n.dart';
 import 'package:sam/view/widget/routing/unanimated_route.dart';
+import 'package:sam/view/widget/stateful_stream_builder.dart';
 
 class SamBottomNavigationBar extends StatelessWidget {
   final SamPage activePage;
@@ -32,8 +37,36 @@ class SamBottomNavigationBar extends StatelessWidget {
   BottomNavigationBarItem _createItem(BuildContext context, SamPage page) {
     return BottomNavigationBarItem(
       title: Text(page.getTitle(context.messages.bottom)),
-      icon: Icon(page.getIcon()),
+      icon: _createIcon(page),
     );
+  }
+
+  Widget _createIcon(SamPage page) {
+    final icon = Icon(page.getIcon());
+    if (page == SamPage.rules) {
+      return StatefulStreamBuilder<List>(
+        stream: service<RulesState>().activeRules,
+        errorBuilder: null,
+        loadingBuilder: null,
+        child: icon,
+        builder: (context, child, activeRules) {
+          final activeCount = activeRules?.length ?? 0;
+          return Badge(
+            badgeContent: Text(
+              activeCount.toString(),
+              textScaleFactor: 0.8,
+              style: TextStyle(
+                inherit: true,
+                color: Colors.white,
+              ),
+            ),
+            child: child,
+          );
+        },
+      );
+    } else {
+      return icon;
+    }
   }
 }
 
@@ -70,7 +103,7 @@ extension on SamPage {
       case SamPage.game:
         return GamePage();
       case SamPage.rules:
-        return Text("Whoops");
+        return RulesPage();
       case SamPage.players:
         return PlayerPage();
     }

@@ -95,7 +95,9 @@ class _StatefulStreamBuilderState<T> extends State<StatefulStreamBuilder<T>> {
     final stream = widget.stream;
     if (stream.lastValue == null) {
       if (stream.lastError == null) {
-        return widget.loadingBuilder(context, widget.child);
+        if (widget.loadingBuilder != null) {
+          return widget.loadingBuilder(context, widget.child);
+        }
       } else {
         if (widget.errorBuilder == null) {
           if (widget.refresh == null) {
@@ -109,9 +111,8 @@ class _StatefulStreamBuilderState<T> extends State<StatefulStreamBuilder<T>> {
           return widget.errorBuilder(context, widget.child, stream.lastError);
         }
       }
-    } else {
-      return widget.builder(context, widget.child, stream.lastValue);
     }
+    return widget.builder(context, widget.child, stream.lastValue);
   }
 }
 
