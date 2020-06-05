@@ -14,19 +14,27 @@ class PlayerSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<PlayerController>(context);
-    return ListView.builder(
-      itemCount: players.length + 1,
-      itemBuilder: (context, index) {
-        if (index == players.length) {
-          return AddPlayerButton();
-        }
-        final player = players[index];
-        return PlayerCard(
-          player,
-          trailing: IconButton(
-            icon: Icon(Icons.remove_circle),
-            onPressed: () => controller.removePlayer(player),
-          ),
+    return ValueListenableBuilder(
+      valueListenable: controller.isEditing,
+      builder: (context, isEditing, _) {
+        final itemCount = players.length + (isEditing ? 1 : 0);
+        return ListView.builder(
+          itemCount: itemCount,
+          itemBuilder: (context, index) {
+            if (index == players.length) {
+              return AddPlayerButton();
+            }
+            final player = players[index];
+            return PlayerCard(
+              player,
+              trailing: isEditing
+                  ? IconButton(
+                      icon: Icon(Icons.remove_circle),
+                      onPressed: () => controller.removePlayer(player),
+                    )
+                  : null,
+            );
+          },
         );
       },
     );

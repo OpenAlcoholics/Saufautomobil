@@ -5,24 +5,16 @@ class PlayerPageFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<PlayerController>(context);
-    return ValueListenableBuilder(
-      valueListenable: controller.players,
-      child: Icon(Icons.check),
-      builder: (context, value, child) {
-        if (value == null || value.isEmpty) {
-          return Container();
-        } else {
-          return FloatingActionButton(
-            child: child,
-            onPressed: _onPressed,
-            tooltip: context.messages.common.submit,
-          );
-        }
+    return ValueListenableBuilder<bool>(
+      valueListenable: controller.isEditing,
+      builder: (context, isEditing, _) {
+        final messages = context.messages.common;
+        return FloatingActionButton(
+          child: Icon(isEditing ? Icons.check : Icons.edit),
+          onPressed: () => controller.toggleEditing(),
+          tooltip: isEditing ? messages.submit : messages.edit,
+        );
       },
     );
-  }
-
-  void _onPressed() {
-    print("User wants to move on from player selection");
   }
 }
