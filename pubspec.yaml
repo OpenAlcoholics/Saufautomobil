@@ -26,18 +26,23 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  get_it: ^3.0.0
   intl: ^0.16.0
-  json_annotation: ^3.0.0
-  shared_preferences: ^0.5.0
-  dio: ^3.0.0
-  # TODO: evaluate
-  cached_network_image: ^2.0.0-rc
-  #TODO maybe async: ^2.3.0
-  #TODO maybe url_launcher: ^5.4.0
+
+  get_it: ^3.0.0
   provider: ^4.0.0
 
+  #TODO maybe url_launcher: ^5.4.0
+
+  json_annotation: ^3.0.0
+  dio: ^3.0.0
+
+  async: ^2.3.0
+
+  shared_preferences: ^0.5.0
+  sqflite: ^1.3.0+2
+
   badges: ^1.1.1
+  # TODO: evaluate cached_network_image: ^2.0.0-rc
 
 dev_dependencies:
   flutter_test:
