@@ -1,5 +1,6 @@
 import 'package:sam/view/common.dart';
 import 'package:sam/view/widget/bottom_navigation/bottom_bar.dart';
+import 'package:sam/view/widget/game/game_content.dart';
 import 'package:sam/view/widget/game/game_controller.dart';
 import 'package:sam/view/widget/game/game_title.dart';
 import 'package:sam/view/widget/overflow/menu.dart';
@@ -15,7 +16,7 @@ class GamePage extends StatelessWidget {
           title: GameTitle(),
           actions: [SamOverflowMenu()],
         ),
-        body: Text("GAME ON"),
+        body: GameContent(),
         bottomNavigationBar: SamBottomNavigationBar(
           activePage: SamPage.game,
         ),

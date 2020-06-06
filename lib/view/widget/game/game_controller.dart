@@ -1,12 +1,11 @@
-import 'package:sam/domain/model.dart';
-import 'package:sam/view/common.dart';
+import 'package:sam/data/dependency_model.dart';
+import 'package:sam/domain/game/game_service.dart';
 
 class GameController {
-  final ValueNotifier<int> taskCount = ValueNotifier(0);
-  final ValueNotifier<Task> currentTask = ValueNotifier(null);
 
-  void dispose() {
-    taskCount.dispose();
-    currentTask.dispose();
+  Future<void> advance() async {
+    await service<GameService>().nextRound();
   }
+
+  void dispose() {}
 }
