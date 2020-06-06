@@ -15,4 +15,9 @@ class Rule implements Comparable<Rule> {
   int compareTo(Rule other) {
     return untilRound.compareTo(other.untilRound);
   }
+
+  @override
+  String toString() {
+    return "$untilRound";
+  }
 }

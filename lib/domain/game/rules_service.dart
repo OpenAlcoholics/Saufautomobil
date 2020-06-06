@@ -4,15 +4,6 @@ import 'package:sam/domain/game/rule.dart';
 import 'package:sam/domain/game/rules_repository.dart';
 
 class RulesService {
-  Future<void> addRule(Rule rule) async {
-    final state = service<GameState>().activeRules;
-    final rules = state.lastValue.toList();
-    rules.add(rule);
-    rules.sort();
-    state.addValue(rules);
-    service<RuleRepository>().addRule(rule);
-  }
-
   Future<void> advanceRules() async {
     final state = service<GameState>();
     final round = state.currentRound.lastValue;
@@ -42,6 +33,7 @@ class RulesService {
         untilRound: task.rounds == -1 ? -1 : round + task.rounds,
       );
       newRules.add(rule);
+      newRules.sort();
       await repo.addRule(rule);
     }
 

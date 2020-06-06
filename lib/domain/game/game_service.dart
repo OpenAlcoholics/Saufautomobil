@@ -2,6 +2,7 @@ import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_persist.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
+import 'package:sam/domain/game/rules_repository.dart';
 import 'package:sam/domain/game/rules_service.dart';
 import 'package:sam/domain/game/task_generator.dart';
 import 'package:sam/domain/game/task_repository.dart';
@@ -40,15 +41,18 @@ class GameService {
   }
 
   Future<void> reset() async {
-    service<TaskRepository>().setTasks([]);
+    final deletes = <Future>[];
+    deletes.add(service<TaskRepository>().setTasks([]));
+    deletes.add(service<RuleRepository>().deleteRules());
     final state = service<GameState>();
     state.tasks.addValue(null);
     state.activeRules.addValue([]);
     final persist = service<GamePersist>();
     state.currentPlayer.addValue(0);
-    persist.storeCurrentPlayer(0);
+    await persist.storeCurrentPlayer(0);
     state.currentRound.addValue(0);
-    persist.storeCurrentRound(0);
+    await persist.storeCurrentRound(0);
+    await Future.wait(deletes);
   }
 
   Future<void> updatePlayers(List<String> players) async {

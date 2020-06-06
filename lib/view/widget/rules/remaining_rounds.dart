@@ -14,7 +14,7 @@ class RemainingRounds extends StatelessWidget {
     return StatefulStreamBuilder(
       stream: stream,
       builder: (context, child, int currentRound) {
-        final remaining = currentRound - untilRound;
+        final remaining = untilRound - currentRound;
         return Text(
           remaining.toString(),
           textScaleFactor: 2,
