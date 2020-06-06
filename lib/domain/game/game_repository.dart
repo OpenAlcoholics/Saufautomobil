@@ -7,9 +7,7 @@ class GameRepository implements Repository {
   GameRepository(this._connection);
 
   @override
-  Future<void> createIfNotExists() async {
-    // TODO implement
-  }
+  Future<void> createIfNotExists() async {}
 
   Future<void> close() {
     return _connection.close();

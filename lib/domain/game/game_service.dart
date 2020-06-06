@@ -1,4 +1,5 @@
 import 'package:sam/data/dependency_model.dart';
+import 'package:sam/domain/game/game_persist.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
 import 'package:sam/domain/game/rules_service.dart';
@@ -11,16 +12,20 @@ class GameService {
     final state = service<GameState>();
 
     await _advanceRound(state);
-    await _advancePlayer(state);
+    final playerIndex = _advancePlayer(state);
+    service<GamePersist>().storeCurrentPlayer(playerIndex);
+    state.currentPlayer.addValue(playerIndex);
+
     await service<RulesService>().advanceRules();
   }
 
   Future<void> _advanceRound(GameState state) async {
     final round = state.currentRound.lastValue + 1;
     state.currentRound.addValue(round);
+    service<GamePersist>().storeCurrentRound(round);
   }
 
-  Future<void> _advancePlayer(GameState state) async {
+  int _advancePlayer(GameState state) {
     final previousIndex = state.currentPlayer.lastValue;
     final playerCount = state.players.lastValue.length;
     if (playerCount == 0) return 0;
@@ -39,9 +44,11 @@ class GameService {
     final state = service<GameState>();
     state.tasks.addValue(null);
     state.activeRules.addValue([]);
+    final persist = service<GamePersist>();
     state.currentPlayer.addValue(0);
+    persist.storeCurrentPlayer(0);
     state.currentRound.addValue(0);
-    // TODO update current round etc. (persist)
+    persist.storeCurrentRound(0);
   }
 
   Future<void> updatePlayers(List<String> players) async {

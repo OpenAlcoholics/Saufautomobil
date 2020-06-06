@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:sam/domain/game/game_persist.dart';
 import 'package:sam/domain/game/game_repository.dart';
 import 'package:sam/domain/game/game_service.dart';
 import 'package:sam/domain/game/game_state.dart';
@@ -12,6 +13,7 @@ import 'package:sam/domain/game/task_repository.dart';
 import 'package:sam/domain/repository.dart';
 import 'package:sam/domain/tasks/taskspec_service.dart';
 import 'package:sam/domain/tasks/taskspec_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 final service = GetIt.instance;
@@ -28,6 +30,7 @@ class RepoCreation {
 
 class DependencyModel {
   Future<void> init() async {
+    service.registerSingleton(await SharedPreferences.getInstance());
     await _registerRepos();
     await _registerStates();
     await _registerServices();
@@ -35,6 +38,8 @@ class DependencyModel {
 
   Future<void> _registerRepos() async {
     final connection = await openDatabase('sam.db');
+    service.registerSingleton(GamePersist());
+
     final createFutures = <Future<void>>[];
     createFutures.add(_registerRepo(GameRepository(connection)));
 

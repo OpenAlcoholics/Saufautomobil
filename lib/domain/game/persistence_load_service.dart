@@ -1,4 +1,5 @@
 import 'package:sam/data/dependency_model.dart';
+import 'package:sam/domain/game/game_persist.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
 import 'package:sam/domain/game/rule.dart';
@@ -20,9 +21,9 @@ class PersistenceLoadService {
 
     futures.add(_loadRules(tasksFuture));
 
-    // TODO implement
-    gameState.currentPlayer.addValue(0);
-    gameState.currentRound.addValue(0);
+    final gamePersist = service<GamePersist>();
+    gameState.currentPlayer.addValue(gamePersist.loadCurrentPlayer());
+    gameState.currentRound.addValue(gamePersist.loadCurrentRound());
 
     await Future.wait(futures);
 
