@@ -1,3 +1,4 @@
+import 'file:///E:/saufautomobil/lib/view/widget/rules/remaining_rounds.dart';
 import 'package:sam/domain/rules/rule.dart';
 import 'package:sam/view/common.dart';
 
@@ -17,11 +18,7 @@ class RuleCard extends StatelessWidget {
           maxLines: 2,
         ),
         subtitle: Text(rule.player),
-        // TODO actually calculate
-        trailing: Text(
-          "0",
-          textScaleFactor: 2,
-        ),
+        trailing: RemainingRounds(rule.untilRound),
       ),
     );
   }
