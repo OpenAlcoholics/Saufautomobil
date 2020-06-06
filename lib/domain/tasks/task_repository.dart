@@ -58,16 +58,20 @@ class TaskRepository implements Repository {
     final result = List<Task>(query.length);
     for (final entry in query) {
       final index = entry[COLUMN_INDEX];
-      final task = Task(
-        text: entry[COLUMN_TEXT],
-        count: entry[COLUMN_COUNT],
-        uses: entry[COLUMN_USES],
-        rounds: entry[COLUMN_ROUNDS],
-        remote: entry[COLUMN_REMOTE] == 1,
-        unique: entry[COLUMN_UNIQUE] == 1,
-      );
+      final task = fromEntry(entry);
       result[index] = task;
     }
     return result;
+  }
+
+  Task fromEntry(Map<String, dynamic> entry) {
+    return Task(
+      text: entry[COLUMN_TEXT],
+      count: entry[COLUMN_COUNT],
+      uses: entry[COLUMN_USES],
+      rounds: entry[COLUMN_ROUNDS],
+      remote: entry[COLUMN_REMOTE] == 1,
+      unique: entry[COLUMN_UNIQUE] == 1,
+    );
   }
 }

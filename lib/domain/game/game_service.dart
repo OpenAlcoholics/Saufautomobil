@@ -1,39 +1,28 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
-import 'package:sam/domain/game/rule.dart';
+import 'package:sam/domain/game/rules_service.dart';
 import 'package:sam/domain/model.dart';
 import 'package:sam/domain/tasks/task_repository.dart';
 
 class GameService {
   Future<void> nextRound() async {
     final state = service<GameState>();
-    // TODO: assume it's not null
 
     await _advanceRound(state);
     await _advancePlayer(state);
+    await service<RulesService>().advanceRules();
   }
 
   Future<void> _advanceRound(GameState state) async {
     final round = state.currentRound.lastValue + 1;
     state.currentRound.addValue(round);
-    final activeRules = state.activeRules;
-    final rules = activeRules.lastValue;
-    if (rules != null) {
-      final newRules = <Rule>[];
-      for (final rule in rules) {
-        if (rule.untilRound > round) {
-          newRules.add(rule);
-        }
-      }
-      activeRules.addValue(newRules);
-      // TODO persist
-    }
   }
 
   Future<void> _advancePlayer(GameState state) async {
     final previousIndex = state.currentPlayer.lastValue;
     final playerCount = state.players.lastValue.length;
+    if (playerCount == 0) return 0;
     return (previousIndex + 1) % playerCount;
   }
 

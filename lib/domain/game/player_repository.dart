@@ -14,8 +14,8 @@ class PlayerRepository implements Repository {
   Future<void> createIfNotExists() async {
     await _connection.execute("""
     CREATE TABLE IF NOT EXISTS $TABLE_NAME (
-        $COLUMN_INDEX INTEGER PRIMARY KEY, 
-        $COLUMN_NAME TEXT UNIQUE NOT NULL
+        $COLUMN_INDEX INTEGER UNIQUE NOT NULL, 
+        $COLUMN_NAME TEXT PRIMARY KEY
     )
     """);
   }

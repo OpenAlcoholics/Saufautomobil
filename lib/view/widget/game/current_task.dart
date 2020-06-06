@@ -11,7 +11,11 @@ class CurrentTask extends StatelessWidget {
     return StatefulStreamBuilder(
       stream: stream,
       builder: (context, _, currentRound) {
-        final task = state.tasks.lastValue[currentRound];
+        final tasks = state.tasks.lastValue;
+        if (tasks == null) {
+          return Container();
+        }
+        final task = tasks[currentRound];
         return Text(task.text);
       },
     );

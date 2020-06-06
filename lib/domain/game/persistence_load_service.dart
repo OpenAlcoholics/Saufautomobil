@@ -1,6 +1,8 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
+import 'package:sam/domain/game/rule.dart';
+import 'package:sam/domain/game/rules_repository.dart';
 import 'package:sam/domain/tasks/task_repository.dart';
 
 class PersistenceLoadService {
@@ -9,19 +11,21 @@ class PersistenceLoadService {
 
     final futures = <Future>[];
     final gameState = service<GameState>();
+
     futures.add(_loadPlayers());
-    futures.add(_loadTasks());
+
+    final tasksFuture = _loadTasks();
+    futures.add(tasksFuture);
+
+    futures.add(_loadRules(tasksFuture));
+
+    // TODO implement
     gameState.currentPlayer.addValue(0);
     gameState.currentRound.addValue(0);
-    gameState.activeRules.addValue([]);
 
     await Future.wait(futures);
 
-    // TODO remove
-    await Future.delayed(Duration(seconds: 1));
-
     gameState.isInitialized.addValue(true);
-    // TODO implement
   }
 
   Future<void> _loadPlayers() async {
@@ -36,5 +40,24 @@ class PersistenceLoadService {
     if (tasks.isNotEmpty) {
       gameState.tasks.addValue(tasks);
     }
+  }
+
+  Future<void> _loadRules(Future<void> tasksFuture) async {
+    await tasksFuture;
+    final gameState = service<GameState>();
+    final tasks = gameState.tasks.lastValue;
+    if (tasks == null) {
+      gameState.activeRules.addValue(const []);
+      return;
+    }
+    final tasklessRules = await service<RuleRepository>().getRules();
+    final rules = tasklessRules
+        .map((e) => Rule(
+              tasks[e.taskIndex],
+              player: e.player,
+              untilRound: e.untilRound,
+            ))
+        .toList(growable: false);
+    gameState.activeRules.addValue(rules);
   }
 }
