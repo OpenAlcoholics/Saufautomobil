@@ -9,8 +9,8 @@ abstract class StatefulStream<T> {
 }
 
 abstract class UpdatableStatefulStream<T> implements StatefulStream<T> {
-  factory UpdatableStatefulStream() {
-    return _UpdatableStatefulStream();
+  factory UpdatableStatefulStream([T initialValue]) {
+    return _UpdatableStatefulStream(initialValue);
   }
 
   void addValue(T value);
@@ -20,6 +20,10 @@ abstract class UpdatableStatefulStream<T> implements StatefulStream<T> {
 
 class _UpdatableStatefulStream<T> implements UpdatableStatefulStream<T> {
   final _controller = StreamController<T>.broadcast();
+
+  _UpdatableStatefulStream([T initialValue]) {
+    lastValue = initialValue;
+  }
 
   @override
   Stream<T> get stream => _controller.stream;

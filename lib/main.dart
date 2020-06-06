@@ -2,7 +2,7 @@ import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/persistence_load_service.dart';
 import 'package:sam/domain/tasks/tasks_service.dart';
 import 'package:sam/view/common.dart';
-import 'package:sam/view/page/game_page.dart';
+import 'package:sam/view/page/init_page.dart';
 import 'package:sam/view/resource/sam_colors.dart';
 import 'package:sam/view/widget/messages_provider.dart';
 
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: GamePage(),
+        home: InitPage(),
       ),
     );
   }

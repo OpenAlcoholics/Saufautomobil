@@ -3,6 +3,9 @@ import 'package:sam/domain/game/rule.dart';
 import 'package:sam/domain/model.dart';
 
 class GameState {
+  final UpdatableStatefulStream<bool> isInitialized =
+      UpdatableStatefulStream(false);
+
   final UpdatableStatefulStream<List<Task>> tasks = UpdatableStatefulStream();
   final UpdatableStatefulStream<int> currentRound = UpdatableStatefulStream();
 
@@ -10,5 +13,6 @@ class GameState {
       UpdatableStatefulStream();
   final UpdatableStatefulStream<int> currentPlayer = UpdatableStatefulStream();
 
-  UpdatableStatefulStream<List<Rule>> activeRules = UpdatableStatefulStream();
+  final UpdatableStatefulStream<List<Rule>> activeRules =
+      UpdatableStatefulStream();
 }

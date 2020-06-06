@@ -28,17 +28,21 @@ class _StatefulStreamSubscriptionState<T>
 
   StreamSubscription<T> _subscribe() {
     return widget.stream.stream.listen(
-      (event) {
-        if (widget.onValue != null) {
-          widget.onValue(event);
-        }
-      },
-      onError: (error) {
-        if (widget.onError != null) {
-          widget.onError(error);
-        }
-      },
+      _onValue,
+      onError: _onError,
     );
+  }
+
+  _onValue(T value) {
+    if (widget.onValue != null) {
+      widget.onValue(value);
+    }
+  }
+
+  _onError(error) {
+    if (widget.onError != null) {
+      widget.onError(error);
+    }
   }
 
   @override
