@@ -1,11 +1,13 @@
+import 'package:sam/domain/repository.dart';
 import 'package:sqflite/sqflite.dart';
 
-class GameRepository {
+class GameRepository implements Repository {
   final Database _connection;
 
   GameRepository(this._connection);
 
-  Future<void> createIfNotExists() {
+  @override
+  Future<void> createIfNotExists() async {
     // TODO implement
   }
 

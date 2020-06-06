@@ -1,5 +1,6 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
+import 'package:sam/domain/game/player_repository.dart';
 
 class GameService {
   Future<void> nextRound() async {
@@ -29,6 +30,7 @@ class GameService {
       players,
       currentPlayerIndex,
     );
+    await service<PlayerRepository>().setPlayers(players);
     state.players.addValue(players);
     state.currentPlayer.addValue(newIndex);
   }
@@ -43,8 +45,9 @@ class GameService {
     }
 
     for (var previousIndex = currentPlayerIndex;
-        previousIndex != currentPlayerIndex;
-        previousIndex = _previousPlayerIndex(oldPlayers, previousIndex)) {
+        previousIndex != -1;
+        previousIndex = _previousPlayerIndex(
+            oldPlayers, currentPlayerIndex, previousIndex)) {
       // Go through all old players in reverse, starting with the current one
       // If one is in the new player list, he's selected
       final player = oldPlayers[previousIndex];
@@ -57,12 +60,21 @@ class GameService {
     return 0;
   }
 
-  int _previousPlayerIndex(List<String> players, int index) {
+  int _previousPlayerIndex(List<String> players, int stopIndex, int index) {
     final previousIndex = index - 1;
     if (previousIndex < 0) {
-      return players.length - 1;
+      final result = players.length - 1;
+      if (result == stopIndex) {
+        return -1;
+      } else {
+        return result;
+      }
     } else {
-      return previousIndex;
+      if (previousIndex == stopIndex) {
+        return -1;
+      } else {
+        return previousIndex;
+      }
     }
   }
 }

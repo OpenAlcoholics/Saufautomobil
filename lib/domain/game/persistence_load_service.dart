@@ -1,15 +1,29 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
+import 'package:sam/domain/game/player_repository.dart';
 
 class PersistenceLoadService {
   Future<void> loadGame() async {
+    await service<RepoCreation>().waitForRepoCreates();
+
+    final futures = <Future>[];
     final gameState = service<GameState>();
-    gameState.players.addValue([]);
+    futures.add(_loadPlayers());
     gameState.currentPlayer.addValue(0);
     gameState.currentRound.addValue(0);
     gameState.activeRules.addValue([]);
 
+    await Future.wait(futures);
+
+    await Future.delayed(Duration(seconds: 1));
+
     gameState.isInitialized.addValue(true);
     // TODO implement
+  }
+
+  Future<void> _loadPlayers() async {
+    final gameState = service<GameState>();
+    final players = await service<PlayerRepository>().loadPlayers();
+    return gameState.players.addValue(players);
   }
 }
