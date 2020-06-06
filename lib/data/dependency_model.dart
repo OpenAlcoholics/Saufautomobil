@@ -4,7 +4,6 @@ import 'package:sam/domain/game/game_repository.dart';
 import 'package:sam/domain/game/game_service.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/persistence_load_service.dart';
-import 'package:sam/domain/game/persistence_store_service.dart';
 import 'package:sam/domain/game/player_repository.dart';
 import 'package:sam/domain/game/reset_service.dart';
 import 'package:sam/domain/game/rules_repository.dart';
@@ -78,7 +77,6 @@ class DependencyModel {
 
   Future<void> _registerServices() async {
     service.registerSingleton(PersistenceLoadService());
-    service.registerSingleton(PersistenceStoreService());
     service.registerSingleton(ResetService());
     service.registerSingleton(RulesService());
     service.registerSingleton(TasksService());
