@@ -1,7 +1,7 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/view/common.dart';
-import 'package:sam/view/widget/stateful_stream_builder.dart';
+import 'package:sam/view/widget/stream/stateful_stream_builder.dart';
 
 class RemainingRounds extends StatelessWidget {
   final int untilRound;

@@ -7,7 +7,7 @@ import 'package:sam/view/page/player_page.dart';
 import 'package:sam/view/page/rules_page.dart';
 import 'package:sam/view/resource/messages.i18n.dart';
 import 'package:sam/view/widget/routing/unanimated_route.dart';
-import 'package:sam/view/widget/stateful_stream_builder.dart';
+import 'package:sam/view/widget/stream/stateful_stream_builder.dart';
 
 class SamBottomNavigationBar extends StatelessWidget {
   final SamPage activePage;

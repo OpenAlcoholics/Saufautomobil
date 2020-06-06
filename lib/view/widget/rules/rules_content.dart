@@ -3,7 +3,7 @@ import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/rule.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/widget/rules/rule_card.dart';
-import 'package:sam/view/widget/stateful_stream_builder.dart';
+import 'package:sam/view/widget/stream/stateful_stream_builder.dart';
 
 class RulesContent extends StatelessWidget {
   @override
