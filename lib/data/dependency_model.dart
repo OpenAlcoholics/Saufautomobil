@@ -8,6 +8,7 @@ import 'package:sam/domain/game/player_repository.dart';
 import 'package:sam/domain/game/reset_service.dart';
 import 'package:sam/domain/game/rules_service.dart';
 import 'package:sam/domain/repository.dart';
+import 'package:sam/domain/tasks/task_repository.dart';
 import 'package:sam/domain/tasks/tasks_service.dart';
 import 'package:sam/domain/tasks/tasks_state.dart';
 import 'package:sqflite/sqflite.dart';
@@ -36,6 +37,7 @@ class DependencyModel {
     final createFutures = <Future<void>>[];
     createFutures.add(_registerRepo(GameRepository(connection)));
     createFutures.add(_registerRepo(PlayerRepository(connection)));
+    createFutures.add(_registerRepo(TaskRepository(connection)));
     service.registerSingleton(RepoCreation(createFutures));
   }
 

@@ -6,6 +6,7 @@ common:
   submit: Fertig
   dismiss: Ausblenden
   edit: Bearbeiten
+  errorNoTasks: Aufgaben konnten nicht geladen werden
 
 page:
   player: Spieler wählen
@@ -24,7 +25,7 @@ bottom:
 
 action:
   editPlayers: Spieler bearbeiten
-  resetGame: Neues Spiel starten
+  resetGame: Spiel beenden
 
 player:
   nameInputHint: Spielernamen eingeben
@@ -33,3 +34,7 @@ player:
 dialog:
   ok: OK
   cancel: Abbrechen
+
+init:
+  resume: Fortfahren
+  newGame: Neues Spiel

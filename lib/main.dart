@@ -1,6 +1,5 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/persistence_load_service.dart';
-import 'package:sam/domain/tasks/tasks_service.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/page/init_page.dart';
 import 'package:sam/view/resource/sam_colors.dart';
@@ -9,7 +8,6 @@ import 'package:sam/view/widget/messages_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyModel().init();
-  service<TasksService>().updateTasks();
   service<PersistenceLoadService>().loadGame();
   runApp(MyApp());
 }

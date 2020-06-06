@@ -15,7 +15,7 @@ class PlayerRepository implements Repository {
     await _connection.execute("""
     CREATE TABLE IF NOT EXISTS $TABLE_NAME (
         $COLUMN_INDEX INTEGER PRIMARY KEY, 
-        $COLUMN_NAME TEXT UNIQUE
+        $COLUMN_NAME TEXT UNIQUE NOT NULL
     )
     """);
   }

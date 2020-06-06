@@ -1,5 +1,6 @@
 import 'package:sam/view/common.dart';
 import 'package:sam/view/resource/sam_colors.dart';
+import 'package:sam/view/widget/init/init_button.dart';
 
 class InitContent extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class InitContent extends StatelessWidget {
             ],
           ),
           SizedBox(height: 40),
-          CircularProgressIndicator(),
+          InitControl(),
         ],
       ),
     );

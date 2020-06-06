@@ -1,6 +1,8 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
+import 'package:sam/domain/model.dart';
+import 'package:sam/domain/tasks/task_repository.dart';
 
 class GameService {
   Future<void> nextRound() async {
@@ -19,6 +21,22 @@ class GameService {
       activeRules.addValue(newRules);
       // TODO persist
     }
+  }
+
+  Future<void> setTasks(List<Task> tasks) async {
+    final state = service<GameState>();
+    await service<TaskRepository>().setTasks(tasks);
+    state.tasks.addValue(tasks);
+  }
+
+  Future<void> reset() async {
+    service<TaskRepository>().setTasks([]);
+    final state = service<GameState>();
+    state.tasks.addValue(null);
+    state.activeRules.addValue([]);
+    state.currentPlayer.addValue(0);
+    state.currentRound.addValue(0);
+    // TODO update current round etc. (persist)
   }
 
   Future<void> updatePlayers(List<String> players) async {

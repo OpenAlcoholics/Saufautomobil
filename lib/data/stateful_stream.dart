@@ -6,6 +6,8 @@ abstract class StatefulStream<T> {
   T get lastValue;
 
   dynamic get lastError;
+
+  Future<void> dispose();
 }
 
 abstract class UpdatableStatefulStream<T> implements StatefulStream<T> {
@@ -45,5 +47,10 @@ class _UpdatableStatefulStream<T> implements UpdatableStatefulStream<T> {
     lastError = null;
     lastValue = value;
     _controller.add(value);
+  }
+
+  @override
+  Future<void> dispose() {
+    return _controller.close();
   }
 }
