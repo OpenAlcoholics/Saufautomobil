@@ -1,6 +1,6 @@
-import 'file:///E:/saufautomobil/lib/view/widget/rules/remaining_rounds.dart';
-import 'package:sam/domain/rules/rule.dart';
+import 'package:sam/domain/game/rule.dart';
 import 'package:sam/view/common.dart';
+import 'package:sam/view/widget/rules/remaining_rounds.dart';
 
 class RuleCard extends StatelessWidget {
   final Rule rule;

@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:sam/data/dependency_model.dart';
-import 'package:sam/domain/rules/rules_state.dart';
+import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/page/game_page.dart';
 import 'package:sam/view/page/player_page.dart';
@@ -45,7 +45,7 @@ class SamBottomNavigationBar extends StatelessWidget {
     final icon = Icon(page.getIcon());
     if (page == SamPage.rules) {
       return StatefulStreamBuilder<List>(
-        stream: service<RulesState>().activeRules,
+        stream: service<GameState>().activeRules,
         errorBuilder: null,
         loadingBuilder: null,
         child: icon,

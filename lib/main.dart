@@ -1,5 +1,5 @@
 import 'package:sam/data/dependency_model.dart';
-import 'package:sam/domain/rules/rules_service.dart';
+import 'package:sam/domain/game/rules_service.dart';
 import 'package:sam/domain/tasks/tasks_service.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/page/game_page.dart';
