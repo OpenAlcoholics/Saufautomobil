@@ -1,4 +1,4 @@
-import 'package:sam/domain/model.dart';
+import 'package:sam/domain/game/task.dart';
 
 class Rule implements Comparable<Rule> {
   final String player;

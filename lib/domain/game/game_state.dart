@@ -1,6 +1,6 @@
 import 'package:sam/data/stateful_stream.dart';
 import 'package:sam/domain/game/rule.dart';
-import 'package:sam/domain/model.dart';
+import 'package:sam/domain/game/task.dart';
 
 class GameState {
   final UpdatableStatefulStream<bool> isInitialized =

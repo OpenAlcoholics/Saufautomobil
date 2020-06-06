@@ -2,8 +2,9 @@ import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
 import 'package:sam/domain/game/rules_service.dart';
+import 'package:sam/domain/game/task_generator.dart';
+import 'package:sam/domain/game/task_repository.dart';
 import 'package:sam/domain/model.dart';
-import 'package:sam/domain/tasks/task_repository.dart';
 
 class GameService {
   Future<void> nextRound() async {
@@ -26,8 +27,9 @@ class GameService {
     return (previousIndex + 1) % playerCount;
   }
 
-  Future<void> setTasks(List<Task> tasks) async {
+  Future<void> setTasks(List<TaskSpec> taskSpecs) async {
     final state = service<GameState>();
+    final tasks = TaskGenerator().generateTasks(taskSpecs);
     await service<TaskRepository>().setTasks(tasks);
     state.tasks.addValue(tasks);
   }

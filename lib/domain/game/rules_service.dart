@@ -26,8 +26,7 @@ class RulesService {
       if (rule.untilRound > round || rule.untilRound == -1) {
         newRules.add(rule);
       } else {
-        // TODO find task index
-        removals.add(repo.deleteRule(0));
+        removals.add(repo.deleteRule(rule.task.id));
       }
     }
     await Future.wait(removals);

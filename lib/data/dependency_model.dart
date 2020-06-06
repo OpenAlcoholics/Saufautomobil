@@ -8,10 +8,10 @@ import 'package:sam/domain/game/player_repository.dart';
 import 'package:sam/domain/game/reset_service.dart';
 import 'package:sam/domain/game/rules_repository.dart';
 import 'package:sam/domain/game/rules_service.dart';
+import 'package:sam/domain/game/task_repository.dart';
 import 'package:sam/domain/repository.dart';
-import 'package:sam/domain/tasks/task_repository.dart';
-import 'package:sam/domain/tasks/tasks_service.dart';
-import 'package:sam/domain/tasks/tasks_state.dart';
+import 'package:sam/domain/tasks/taskspec_service.dart';
+import 'package:sam/domain/tasks/taskspec_state.dart';
 import 'package:sqflite/sqflite.dart';
 
 final service = GetIt.instance;
@@ -67,7 +67,7 @@ class DependencyModel {
   }
 
   Future<void> _registerStates() async {
-    service.registerSingleton(TasksState());
+    service.registerSingleton(TaskSpecState());
     service.registerSingleton(GameState());
   }
 

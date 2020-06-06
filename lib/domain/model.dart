@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'model.g.dart';
 
 @JsonSerializable()
-class Task {
+class TaskSpec {
   /// The task text.
   final String text;
 
@@ -22,7 +22,7 @@ class Task {
   /// Whether only one instance of this task may be active
   final bool unique;
 
-  Task({
+  TaskSpec({
     this.text,
     this.count,
     this.uses,
@@ -31,7 +31,7 @@ class Task {
     this.unique,
   });
 
-  factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
+  factory TaskSpec.fromJson(Map<String, dynamic> json) => _$TaskSpecFromJson(json);
 
   @override
   String toString() {

@@ -1,7 +1,7 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_service.dart';
 import 'package:sam/domain/game/game_state.dart';
-import 'package:sam/domain/tasks/tasks_state.dart';
+import 'package:sam/domain/tasks/taskspec_state.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/page/game_page.dart';
 import 'package:sam/view/resource/sam_colors.dart';
@@ -17,7 +17,7 @@ class InitControl extends StatelessWidget {
     final controller = Provider.of<InitController>(context);
 
     return FutureCreator(
-      task: controller.updateTasks,
+      task: controller.updateTaskSpecs,
       builder: (context, taskUpdate) {
         return StatefulStreamBuilder(
           stream: stream,
@@ -65,14 +65,14 @@ class InitControl extends StatelessWidget {
     BuildContext context,
     InitController controller,
   ) async {
-    final tasks = service<TasksState>().tasks.lastValue;
+    final tasks = service<TaskSpecState>().tasks.lastValue;
     if (tasks == null) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(context.messages.common.errorNoTasks),
         action: SnackBarAction(
           label: context.messages.common.retry,
           onPressed: () {
-            controller.updateTasks();
+            controller.updateTaskSpecs();
           },
         ),
       ));

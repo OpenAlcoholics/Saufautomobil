@@ -1,15 +1,15 @@
-import 'package:sam/domain/model.dart';
+import 'package:sam/domain/game/task.dart';
 import 'package:sam/domain/repository.dart';
 import 'package:sqflite/sqflite.dart';
 
 const TABLE_NAME = "tasks";
 
+const COLUMN_ID = "task_id";
+const COLUMN_ORIGIN_ID = "origin_id";
 const COLUMN_INDEX = "task_index";
 const COLUMN_TEXT = "task_text";
-const COLUMN_COUNT = "count";
 const COLUMN_USES = "uses";
 const COLUMN_ROUNDS = "rounds";
-const COLUMN_REMOTE = "remote";
 const COLUMN_UNIQUE = "task_unique";
 
 class TaskRepository implements Repository {
@@ -21,12 +21,12 @@ class TaskRepository implements Repository {
   Future<void> createIfNotExists() async {
     await _connection.execute("""
     CREATE TABLE IF NOT EXISTS $TABLE_NAME (
-        $COLUMN_INDEX INTEGER PRIMARY KEY, 
-        $COLUMN_TEXT TEXT UNIQUE NOT NULL, 
-        $COLUMN_COUNT INTEGER NOT NULL, 
+        $COLUMN_ID TEXT PRIMARY KEY, 
+        $COLUMN_ORIGIN_ID TEXT NOT NULL, 
+        $COLUMN_INDEX INTEGER UNIQUE NOT NULL, 
+        $COLUMN_TEXT TEXT NOT NULL, 
         $COLUMN_USES INTEGER NOT NULL, 
         $COLUMN_ROUNDS INTEGER NOT NULL, 
-        $COLUMN_REMOTE INTEGER NOT NULL, 
         $COLUMN_UNIQUE INTEGER NOT NULL
     )
     """);
@@ -41,13 +41,13 @@ class TaskRepository implements Repository {
     for (var index = 0; index < tasks.length; ++index) {
       final task = tasks[index];
       batch.insert(TABLE_NAME, {
+        COLUMN_ID: task.id,
+        COLUMN_ORIGIN_ID: task.originId,
         COLUMN_INDEX: index,
         COLUMN_TEXT: task.text,
-        COLUMN_COUNT: task.count,
         COLUMN_USES: task.uses,
         COLUMN_ROUNDS: task.rounds,
-        COLUMN_REMOTE: task.remote ? 1 : 0,
-        COLUMN_UNIQUE: task.unique ? 1 : 0,
+        COLUMN_UNIQUE: task.isUnique ? 1 : 0,
       });
     }
     await batch.commit();
@@ -66,12 +66,12 @@ class TaskRepository implements Repository {
 
   Task fromEntry(Map<String, dynamic> entry) {
     return Task(
+      id: entry[COLUMN_ID],
+      originId: entry[COLUMN_ORIGIN_ID],
       text: entry[COLUMN_TEXT],
-      count: entry[COLUMN_COUNT],
       uses: entry[COLUMN_USES],
       rounds: entry[COLUMN_ROUNDS],
-      remote: entry[COLUMN_REMOTE] == 1,
-      unique: entry[COLUMN_UNIQUE] == 1,
+      isUnique: entry[COLUMN_UNIQUE] == 1,
     );
   }
 }

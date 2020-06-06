@@ -3,7 +3,8 @@ import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/player_repository.dart';
 import 'package:sam/domain/game/rule.dart';
 import 'package:sam/domain/game/rules_repository.dart';
-import 'package:sam/domain/tasks/task_repository.dart';
+import 'package:sam/domain/game/task.dart';
+import 'package:sam/domain/game/task_repository.dart';
 
 class PersistenceLoadService {
   Future<void> loadGame() async {
@@ -50,10 +51,11 @@ class PersistenceLoadService {
       gameState.activeRules.addValue(const []);
       return;
     }
+    final taskById = Map<String, Task>.fromIterable(tasks, key: (e) => e.id);
     final tasklessRules = await service<RuleRepository>().getRules();
     final rules = tasklessRules
         .map((e) => Rule(
-              tasks[e.taskIndex],
+              taskById[e.taskId],
               player: e.player,
               untilRound: e.untilRound,
             ))
