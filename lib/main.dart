@@ -1,5 +1,5 @@
 import 'package:sam/data/dependency_model.dart';
-import 'package:sam/domain/game/rules_service.dart';
+import 'package:sam/domain/game/persistence_load_service.dart';
 import 'package:sam/domain/tasks/tasks_service.dart';
 import 'package:sam/view/common.dart';
 import 'package:sam/view/page/game_page.dart';
@@ -10,7 +10,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyModel().init();
   service<TasksService>().updateTasks();
-  service<RulesService>().loadRules();
+  service<PersistenceLoadService>().loadGame();
   runApp(MyApp());
 }
 
