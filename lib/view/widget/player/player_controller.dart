@@ -1,11 +1,25 @@
+import 'dart:async';
+
+import 'package:sam/data/dependency_model.dart';
+import 'package:sam/domain/game/game_service.dart';
+import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/view/common.dart';
 
 class PlayerController {
   final ValueNotifier<List<String>> players = ValueNotifier(null);
   final ValueNotifier<bool> isEditing = ValueNotifier(false);
+  StreamSubscription _playerSub;
 
   PlayerController() {
-    players.value = ["Björn", "Torben"];
+    _playerSub = _subscribeToPlayers();
+  }
+
+  StreamSubscription _subscribeToPlayers() {
+    final playerState = service<GameState>().players;
+    players.value = playerState.lastValue;
+    return playerState.stream.listen((event) {
+      players.value = event;
+    });
   }
 
   Future<void> addPlayer(String newPlayer) async {
@@ -34,16 +48,23 @@ class PlayerController {
   }
 
   Future<void> _commitChanges() async {
-    // TODO commit changes
+    final players = this.players.value;
+    await service<GameService>().updatePlayers(players);
   }
 
   Future<void> toggleEditing() async {
     final wasEditing = isEditing.value;
-    await _commitChanges();
+    if (wasEditing) {
+      await _commitChanges();
+      _playerSub.resume();
+    } else {
+      _playerSub.pause();
+    }
     isEditing.value = !wasEditing;
   }
 
   void dispose() {
+    _playerSub.cancel();
     players.dispose();
     isEditing.dispose();
   }
