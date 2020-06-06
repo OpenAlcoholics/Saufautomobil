@@ -6,8 +6,8 @@ import 'package:sam/domain/model.dart';
 // Not exactly, but whatever
 const MAX_RANDOM_INT = 1 << 32;
 
-const MAX_TEMPLATE_INT = 6;
-const MIN_TEMPLATE_INT = 1;
+const MAX_TEMPLATE_INT = 7;
+const MIN_TEMPLATE_INT = 2;
 
 class TaskGenerator {
   final Random random = Random();
