@@ -1,5 +1,6 @@
 import 'package:sam/view/common.dart';
 import 'package:sam/view/widget/bottom_navigation/bottom_bar.dart';
+import 'package:sam/view/widget/game/advance_button.dart';
 import 'package:sam/view/widget/game/game_content.dart';
 import 'package:sam/view/widget/game/game_controller.dart';
 import 'package:sam/view/widget/game/game_title.dart';
@@ -17,6 +18,7 @@ class GamePage extends StatelessWidget {
           actions: [SamOverflowMenu()],
         ),
         body: GameContent(),
+        floatingActionButton: GameAdvanceButton(),
         bottomNavigationBar: SamBottomNavigationBar(
           activePage: SamPage.game,
         ),

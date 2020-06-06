@@ -26,6 +26,7 @@ bottom:
 action:
   editPlayers: Spieler bearbeiten
   resetGame: Spiel beenden
+  advance: Nächste Aufgabe
 
 player:
   nameInputHint: Spielernamen eingeben
