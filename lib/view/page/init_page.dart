@@ -10,6 +10,7 @@ class InitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final stream = service<GameState>().isInitialized;
     if (stream.lastValue) {
+      // TODO this isn't safe
       Future.microtask(() => _moveOn(context));
     }
     return Scaffold(
