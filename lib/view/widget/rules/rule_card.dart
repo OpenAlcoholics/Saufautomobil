@@ -34,7 +34,6 @@ class RuleCard extends StatelessWidget {
                   Text(
                     text,
                     softWrap: true,
-                    maxLines: 2,
                   ),
                 ],
               ),
