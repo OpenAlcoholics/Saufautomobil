@@ -7,5 +7,7 @@ abstract class SamColors {
   static Color accent = Color(0xFF1F4E5F);
   static Color disabled = Colors.blueGrey;
 
+  static Color activePlayerHighlight = Colors.lightGreenAccent;
+
   static Color primaryText = Color(0xFF1F4E5F);
 }

@@ -1,6 +1,7 @@
 import 'package:sam/data/dependency_model.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/view/common.dart';
+import 'package:sam/view/resource/sam_colors.dart';
 import 'package:sam/view/widget/stream/stateful_stream_builder.dart';
 
 class PlayerCard extends StatelessWidget {
@@ -22,7 +23,7 @@ class PlayerCard extends StatelessWidget {
       builder: (context, _, activeIndex) {
         final isActive = activeIndex == index;
         return Card(
-          color: isActive ? Colors.lightGreenAccent : null,
+          color: isActive ? SamColors.activePlayerHighlight : null,
           child: ListTile(
             title: Text(player),
             trailing: trailing,
