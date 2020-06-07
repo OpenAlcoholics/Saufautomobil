@@ -18,23 +18,25 @@ class PlayerSelection extends StatelessWidget {
       valueListenable: controller.isEditing,
       builder: (context, isEditing, _) {
         final itemCount = players.length + (isEditing ? 1 : 0);
-        return ListView.builder(
-          itemCount: itemCount,
-          itemBuilder: (context, index) {
-            if (index == players.length) {
-              return AddPlayerButton();
-            }
-            final player = players[index];
-            return PlayerCard(
-              player,
-              trailing: isEditing
-                  ? IconButton(
-                      icon: Icon(Icons.remove_circle),
-                      onPressed: () => controller.removePlayer(player),
-                    )
-                  : null,
-            );
-          },
+        return Scrollbar(
+          child: ListView.builder(
+            itemCount: itemCount,
+            itemBuilder: (context, index) {
+              if (index == players.length) {
+                return AddPlayerButton();
+              }
+              final player = players[index];
+              return PlayerCard(
+                player,
+                trailing: isEditing
+                    ? IconButton(
+                        icon: Icon(Icons.remove_circle),
+                        onPressed: () => controller.removePlayer(player),
+                      )
+                    : null,
+              );
+            },
+          ),
         );
       },
     );
