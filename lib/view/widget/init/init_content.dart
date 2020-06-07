@@ -23,7 +23,11 @@ class InitContent extends StatelessWidget {
             ],
           ),
           SizedBox(height: 40),
-          InitControl(),
+          Container(
+            height: 48,
+            alignment: AlignmentDirectional.topCenter,
+            child: InitControl(),
+          ),
         ],
       ),
     );
