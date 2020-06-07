@@ -84,6 +84,15 @@ class GameService {
     state.players.addValue(players);
     await service<GamePersist>().storeCurrentPlayer(newIndex);
     state.currentPlayer.addValue(newIndex);
+
+    final playersSet = players.toSet();
+    final removedPlayers = <String>[];
+    for (final previousPlayer in previousPlayers) {
+      if (!playersSet.contains(previousPlayer)) {
+        removedPlayers.add(previousPlayer);
+      }
+    }
+    service<RulesService>().deleteWherePlayer(removedPlayers);
   }
 
   int _calculateNewIndex(

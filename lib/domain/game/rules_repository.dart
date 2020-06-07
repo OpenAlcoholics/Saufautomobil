@@ -1,6 +1,4 @@
-import 'package:sam/domain/game/player_repository.dart' as player;
 import 'package:sam/domain/game/rule.dart';
-import 'package:sam/domain/game/task_repository.dart' as tasks;
 import 'package:sam/domain/repository.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -54,6 +52,18 @@ class RuleRepository implements Repository {
       where: "$COLUMN_TASK_ID = ?",
       whereArgs: [taskId],
     );
+  }
+
+  Future<void> deleteRulesWhereTasks(Iterable<String> taskIds) async {
+    final batch = _connection.batch();
+    for (final taskId in taskIds) {
+      batch.delete(
+        TABLE_NAME,
+        where: "$COLUMN_TASK_ID = ?",
+        whereArgs: [taskId],
+      );
+    }
+    await batch.commit();
   }
 
   Future<void> deleteRules() async {

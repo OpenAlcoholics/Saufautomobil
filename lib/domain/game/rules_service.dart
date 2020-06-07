@@ -4,6 +4,22 @@ import 'package:sam/domain/game/rule.dart';
 import 'package:sam/domain/game/rules_repository.dart';
 
 class RulesService {
+  Future<void> deleteWherePlayer(List<String> players) async {
+    final activeRules = service<GameState>().activeRules;
+    final oldRules = activeRules.lastValue;
+    final removedRules =
+        oldRules.where((rule) => players.contains(rule.player)).toSet();
+    final newRules = oldRules.toList();
+    newRules.removeWhere((rule) => removedRules.contains(rule));
+    activeRules.addValue(newRules);
+
+    if (removedRules.isNotEmpty) {
+      await service<RuleRepository>().deleteRulesWhereTasks(
+        removedRules.map((e) => e.task.id),
+      );
+    }
+  }
+
   Future<void> advanceRules() async {
     final state = service<GameState>();
     final round = state.currentRound.lastValue;
