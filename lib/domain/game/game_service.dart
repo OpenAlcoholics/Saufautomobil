@@ -82,6 +82,7 @@ class GameService {
     );
     await service<PlayerRepository>().setPlayers(players);
     state.players.addValue(players);
+    await service<GamePersist>().storeCurrentPlayer(newIndex);
     state.currentPlayer.addValue(newIndex);
   }
 
