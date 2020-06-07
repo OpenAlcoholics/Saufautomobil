@@ -5,17 +5,14 @@ import 'package:sam/view/widget/game/game_player_list.dart';
 class GameContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: AlignmentDirectional.center,
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GamePlayerList(),
-          Expanded(child: CurrentTask()),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(child: CurrentTask()),
+        Divider(height: 2),
+        GamePlayerList(),
+      ],
     );
   }
 }

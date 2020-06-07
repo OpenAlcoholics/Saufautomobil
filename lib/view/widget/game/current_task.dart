@@ -16,13 +16,19 @@ class CurrentTask extends StatelessWidget {
           return Container();
         }
         final task = tasks[currentRound];
-        return Text(
-          task.text,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            inherit: true,
-            fontSize: 32,
-
+        return Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+              child: Text(
+                task.text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  inherit: true,
+                  fontSize: 32,
+                ),
+              ),
+            ),
           ),
         );
       },

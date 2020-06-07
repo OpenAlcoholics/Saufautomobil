@@ -16,27 +16,53 @@ class GamePlayerList extends StatelessWidget {
         return StatefulStreamBuilder(
           stream: gameState.currentPlayer,
           builder: (context, _, currentPlayer) {
-            final controller = ScrollController(
-              initialScrollOffset: currentPlayer * 40.0,
-            );
-            return SizedBox(
-              height: 32,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                controller: controller,
-                separatorBuilder: (context, index) => const SizedBox(width: 8),
-                itemCount: players.length,
-                itemBuilder: (context, index) {
+            final indices = _calcIndices(currentPlayer, players.length);
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: indices.map(
+                (index) {
+                  final isActive = index == currentPlayer;
                   return PlayerChip(
                     player: players[index],
-                    isActive: index == currentPlayer,
+                    isActive: isActive,
                   );
                 },
-              ),
+              ).toList(growable: false),
             );
           },
         );
       },
     );
+  }
+
+  List<int> _calcIndices(int current, int size) {
+    switch (size) {
+      case 1:
+        return const [0];
+      case 2:
+        return const [0, 1];
+      default:
+        return [
+          _calcPrev(current, size),
+          current,
+          _calcNext(current, size),
+        ];
+    }
+  }
+
+  int _calcPrev(int current, int size) {
+    if (current == 0) {
+      return size - 1;
+    } else {
+      return current - 1;
+    }
+  }
+
+  int _calcNext(int current, int size) {
+    if (current + 1 == size) {
+      return 0;
+    } else {
+      return current + 1;
+    }
   }
 }
