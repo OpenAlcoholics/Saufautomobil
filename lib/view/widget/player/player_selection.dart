@@ -28,7 +28,7 @@ class PlayerSelection extends StatelessWidget {
               final player = players[index];
               return PlayerCard(
                 player,
-                index: index,
+                index: isEditing ? -1 : index,
                 trailing: isEditing
                     ? IconButton(
                         icon: Icon(Icons.remove_circle),
