@@ -21,13 +21,7 @@ class RuleRepository implements Repository {
     CREATE TABLE IF NOT EXISTS $TABLE_NAME (
         $COLUMN_TASK_ID TEXT NOT NULL, 
         $COLUMN_UNTIL INTEGER, 
-        $COLUMN_PLAYER STRING, 
-        FOREIGN KEY ($COLUMN_TASK_ID) 
-        REFERENCES ${tasks.TABLE_NAME} (${tasks.COLUMN_INDEX})
-        ON DELETE CASCADE,
-        FOREIGN KEY ($COLUMN_PLAYER) 
-        REFERENCES ${player.TABLE_NAME} (${player.COLUMN_NAME})
-        ON DELETE CASCADE
+        $COLUMN_PLAYER STRING
     )
     """);
   }
