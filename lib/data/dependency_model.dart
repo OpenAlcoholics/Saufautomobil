@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:sam/domain/game/game_persist.dart';
-import 'package:sam/domain/game/game_repository.dart';
 import 'package:sam/domain/game/game_service.dart';
 import 'package:sam/domain/game/game_state.dart';
 import 'package:sam/domain/game/persistence_load_service.dart';
@@ -40,7 +39,6 @@ class DependencyModel {
     service.registerSingleton(GamePersist());
 
     final createFutures = <Future<void>>[];
-    createFutures.add(_registerRepo(GameRepository(connection)));
 
     final playerFuture = _registerRepo(PlayerRepository(connection));
     createFutures.add(playerFuture);
