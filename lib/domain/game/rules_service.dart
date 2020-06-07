@@ -36,7 +36,6 @@ class RulesService {
         removals.add(repo.deleteRule(rule.task.id));
       }
     }
-    await Future.wait(removals);
 
     final newTaskIndex = state.currentTurn.lastValue;
     final task = state.tasks.lastValue[newTaskIndex];
@@ -48,10 +47,25 @@ class RulesService {
         player: currentPlayer,
         untilRound: task.rounds == -1 ? -1 : round + task.rounds,
       );
+
+      if (task.isUnique) {
+        final originId = task.originId;
+        newRules.removeWhere((oldRule) {
+          if (oldRule.task.originId == originId) {
+            removals.add(repo.deleteRule(oldRule.task.id));
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
       newRules.add(rule);
       newRules.sort();
       await repo.addRule(rule);
     }
+
+    await Future.wait(removals);
 
     activeRules.addValue(newRules);
   }
