@@ -11,14 +11,38 @@ class RuleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = rule.task.text;
     return Card(
-      child: ListTile(
-        title: Text(
-          rule.task.text,
-          maxLines: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    rule.player,
+                    style: TextStyle(
+                      inherit: true,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    text,
+                    softWrap: true,
+                    maxLines: 2,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 5),
+            RemainingRounds(rule.untilRound),
+          ],
         ),
-        subtitle: Text(rule.player),
-        trailing: RemainingRounds(rule.untilRound),
       ),
     );
   }
