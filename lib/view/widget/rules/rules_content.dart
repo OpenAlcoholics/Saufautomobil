@@ -16,12 +16,14 @@ class RulesContent extends StatelessWidget {
             child: Text(context.messages.rules.noActive),
           );
         } else {
-          return ListView.builder(
-            itemCount: rules.length,
-            itemBuilder: (context, index) {
-              final rule = rules[index];
-              return RuleCard(rule);
-            },
+          return Scrollbar(
+            child: ListView.builder(
+              itemCount: rules.length,
+              itemBuilder: (context, index) {
+                final rule = rules[index];
+                return RuleCard(rule);
+              },
+            ),
           );
         }
       },
