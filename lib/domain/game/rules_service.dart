@@ -22,7 +22,7 @@ class RulesService {
     }
     await Future.wait(removals);
 
-    final newTaskIndex = state.currentRound.lastValue;
+    final newTaskIndex = state.currentTurn.lastValue;
     final task = state.tasks.lastValue[newTaskIndex];
     if (task.rounds > 0 || task.rounds == -1) {
       final currentPlayerIndex = state.currentPlayer.lastValue;

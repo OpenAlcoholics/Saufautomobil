@@ -22,8 +22,9 @@ class PersistenceLoadService {
     futures.add(_loadRules(tasksFuture));
 
     final gamePersist = service<GamePersist>();
-    gameState.currentPlayer.addValue(gamePersist.loadCurrentPlayer());
-    gameState.currentRound.addValue(gamePersist.loadCurrentRound());
+    gameState.currentPlayer.addValue(gamePersist.loadCurrentPlayer() ?? 0);
+    gameState.currentTurn.addValue(gamePersist.loadCurrentTurn() ?? 0);
+    gameState.currentRound.addValue(gamePersist.loadCurrentRound() ?? 0);
 
     await Future.wait(futures);
 

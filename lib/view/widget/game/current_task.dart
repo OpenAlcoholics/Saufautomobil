@@ -7,7 +7,7 @@ class CurrentTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = service<GameState>();
-    final stream = state.currentRound;
+    final stream = state.currentTurn;
     return StatefulStreamBuilder(
       stream: stream,
       builder: (context, _, currentRound) {

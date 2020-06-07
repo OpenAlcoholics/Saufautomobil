@@ -7,6 +7,8 @@ class GameState {
       UpdatableStatefulStream(false);
 
   final UpdatableStatefulStream<List<Task>> tasks = UpdatableStatefulStream();
+  final UpdatableStatefulStream<int> currentTurn = UpdatableStatefulStream();
+
   final UpdatableStatefulStream<int> currentRound = UpdatableStatefulStream();
 
   final UpdatableStatefulStream<List<String>> players =

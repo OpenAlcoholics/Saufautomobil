@@ -12,21 +12,35 @@ class GameService {
   Future<void> nextRound() async {
     final state = service<GameState>();
 
-    await _advanceRound(state);
-    final playerIndex = _advancePlayer(state);
-    service<GamePersist>().storeCurrentPlayer(playerIndex);
-    state.currentPlayer.addValue(playerIndex);
+    await _advanceTurn(state);
+    await _advancePlayer(state);
 
     await service<RulesService>().advanceRules();
   }
 
-  Future<void> _advanceRound(GameState state) async {
-    final round = state.currentRound.lastValue + 1;
-    state.currentRound.addValue(round);
-    service<GamePersist>().storeCurrentRound(round);
+  Future<void> _advanceTurn(GameState state) async {
+    final round = state.currentTurn.lastValue + 1;
+    state.currentTurn.addValue(round);
+    service<GamePersist>().storeCurrentTurn(round);
   }
 
-  int _advancePlayer(GameState state) {
+  Future<void> _advancePlayer(GameState state) async {
+    final playerIndex = _calcNextPlayerIndex(state);
+    if (playerIndex == 0) {
+      await _advanceRound(state);
+    }
+    await service<GamePersist>().storeCurrentPlayer(playerIndex);
+    state.currentPlayer.addValue(playerIndex);
+  }
+
+  Future<void> _advanceRound(GameState state) async {
+    final roundState = state.currentRound;
+    final newRound = roundState.lastValue + 1;
+    roundState.addValue(newRound);
+    await service<GamePersist>().storeCurrentRound(newRound);
+  }
+
+  int _calcNextPlayerIndex(GameState state) {
     final previousIndex = state.currentPlayer.lastValue;
     final playerCount = state.players.lastValue.length;
     if (playerCount == 0) return 0;
@@ -50,6 +64,8 @@ class GameService {
     final persist = service<GamePersist>();
     state.currentPlayer.addValue(0);
     await persist.storeCurrentPlayer(0);
+    state.currentTurn.addValue(0);
+    await persist.storeCurrentTurn(0);
     state.currentRound.addValue(0);
     await persist.storeCurrentRound(0);
     await Future.wait(deletes);

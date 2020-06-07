@@ -8,7 +8,7 @@ class GameTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final gameState = service<GameState>();
     final taskCount = gameState.tasks.lastValue.length;
-    final stream = gameState.currentRound;
+    final stream = gameState.currentTurn;
     return StatefulStreamBuilder(
       stream: stream,
       builder: (context, _, currentRound) {
