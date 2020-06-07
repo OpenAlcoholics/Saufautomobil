@@ -16,20 +16,20 @@ class GamePlayerList extends StatelessWidget {
         return StatefulStreamBuilder(
           stream: gameState.currentPlayer,
           builder: (context, _, currentPlayer) {
-            final indices = _buildIndices(currentPlayer, size: players.length);
+            final controller = ScrollController(
+              initialScrollOffset: currentPlayer * 40.0,
+            );
             return SizedBox(
               height: 32,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) {
-                  return const SizedBox(width: 8);
-                },
-                itemCount: indices.length,
+                controller: controller,
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+                itemCount: players.length,
                 itemBuilder: (context, index) {
-                  final playerIndex = indices[index];
                   return PlayerChip(
-                    player: players[playerIndex],
-                    isActive: playerIndex == currentPlayer,
+                    player: players[index],
+                    isActive: index == currentPlayer,
                   );
                 },
               ),
@@ -38,31 +38,5 @@ class GamePlayerList extends StatelessWidget {
         );
       },
     );
-  }
-
-  List<int> _buildIndices(int currentPlayer, {@required int size}) {
-    if (size == 1) {
-      return [0];
-    } else if (size == 2) {
-      return const [0, 1];
-    } else {
-      return [
-        _calcPrevIndex(currentPlayer, size: size),
-        currentPlayer,
-        _calcNextIndex(currentPlayer, size: size),
-      ];
-    }
-  }
-
-  int _calcNextIndex(int currentPlayer, {@required int size}) {
-    return (currentPlayer + 1) % size;
-  }
-
-  int _calcPrevIndex(int currentPlayer, {@required int size}) {
-    if (currentPlayer == 0) {
-      return size - 1;
-    } else {
-      return currentPlayer - 1;
-    }
   }
 }

@@ -12,8 +12,8 @@ class GameContent extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: CurrentTask()),
           GamePlayerList(),
+          Expanded(child: CurrentTask()),
         ],
       ),
     );
