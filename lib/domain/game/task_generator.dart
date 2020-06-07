@@ -41,8 +41,7 @@ class TaskGenerator {
       originId: originId,
       text: _processText(spec.text),
       uses: spec.uses,
-      // TODO remove addition
-      rounds: spec.rounds + random.nextInt(6),
+      rounds: spec.rounds,
       isUnique: spec.unique,
     );
   }
