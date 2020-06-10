@@ -28,10 +28,21 @@ class RulesService {
     final rules = activeRules.lastValue;
     final repo = service<RuleRepository>();
 
+    final currentPlayerIndex = state.currentPlayer.lastValue;
+    final players = state.players.lastValue;
+    String currentPlayer;
+    if (players.isNotEmpty) {
+      currentPlayer = players[currentPlayerIndex];
+    }
+
     final removals = <Future>[];
     final newRules = <Rule>[];
     for (final rule in rules) {
-      if (rule.untilRound > round || rule.untilRound == -1) {
+      final untilPlayerIndex = rule.untilPlayerIndex;
+      if (rule.untilRound == -1 ||
+          rule.untilRound > round ||
+          (untilPlayerIndex >= players.length && currentPlayerIndex == 0) ||
+          untilPlayerIndex > currentPlayerIndex) {
         newRules.add(rule);
       } else {
         removals.add(repo.deleteRule(rule.task.id));
@@ -41,12 +52,11 @@ class RulesService {
     final newTaskIndex = state.currentTurn.lastValue;
     final task = state.tasks.lastValue[newTaskIndex];
     if (task.rounds > 0 || task.rounds == -1) {
-      final currentPlayerIndex = state.currentPlayer.lastValue;
-      final currentPlayer = state.players.lastValue[currentPlayerIndex];
       final rule = Rule(
         task,
         player: task.isPersonal ? currentPlayer : null,
         untilRound: task.rounds == -1 ? -1 : round + task.rounds,
+        untilPlayerIndex: task.rounds == -1 ? -1 : currentPlayerIndex,
       );
 
       if (task.isUnique) {

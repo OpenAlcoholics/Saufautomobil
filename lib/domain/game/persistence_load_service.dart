@@ -60,6 +60,7 @@ class PersistenceLoadService {
               taskById[e.taskId],
               player: e.player,
               untilRound: e.untilRound,
+              untilPlayerIndex: e.untilPlayerIndex,
             ))
         .toList(growable: false);
     gameState.activeRules.addValue(rules);

@@ -6,6 +6,7 @@ const TABLE_NAME = "rules";
 
 const COLUMN_TASK_ID = "task_id";
 const COLUMN_UNTIL = "until_round";
+const COLUMN_UNTIL_PLAYER = "until_player_index";
 const COLUMN_PLAYER = "player";
 
 class RuleRepository implements Repository {
@@ -19,6 +20,7 @@ class RuleRepository implements Repository {
     CREATE TABLE IF NOT EXISTS $TABLE_NAME (
         $COLUMN_TASK_ID TEXT NOT NULL, 
         $COLUMN_UNTIL INTEGER, 
+        $COLUMN_UNTIL_PLAYER INTEGER, 
         $COLUMN_PLAYER STRING
     )
     """);
@@ -29,6 +31,7 @@ class RuleRepository implements Repository {
       COLUMN_TASK_ID: rule.task.id,
       COLUMN_PLAYER: rule.player,
       COLUMN_UNTIL: rule.untilRound,
+      COLUMN_UNTIL_PLAYER: rule.untilPlayerIndex,
     });
   }
 
@@ -39,6 +42,7 @@ class RuleRepository implements Repository {
       final task = TasklessRule(
         player: entry[COLUMN_PLAYER],
         untilRound: entry[COLUMN_UNTIL],
+        untilPlayerIndex: entry[COLUMN_UNTIL_PLAYER],
         taskId: entry[COLUMN_TASK_ID],
       );
       result.add(task);
@@ -75,6 +79,12 @@ class TasklessRule {
   final String taskId;
   final String player;
   final int untilRound;
+  final int untilPlayerIndex;
 
-  TasklessRule({this.taskId, this.player, this.untilRound});
+  TasklessRule({
+    this.taskId,
+    this.player,
+    this.untilRound,
+    this.untilPlayerIndex,
+  });
 }

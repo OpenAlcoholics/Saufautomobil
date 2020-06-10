@@ -4,11 +4,13 @@ class Rule implements Comparable<Rule> {
   final String player;
   final Task task;
   final int untilRound;
+  final int untilPlayerIndex;
 
   Rule(
     this.task, {
     this.player,
     this.untilRound,
+    this.untilPlayerIndex,
   });
 
   @override
