@@ -4,7 +4,7 @@ import 'package:sam/domain/model.dart';
 import 'package:sam/domain/tasks/taskspec_state.dart';
 
 const _TASKS_URL =
-    'https://github.com/OpenAlcoholics/drinking-game-cards/raw/develop/tasks_is.json';
+    'https://github.com/OpenAlcoholics/drinking-game-cards/raw/v1/tasks.json';
 
 class TasksService {
   Future<void> updateTaskSpecs() async {
