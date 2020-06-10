@@ -14,6 +14,9 @@ class Task {
   /// How long this task is active (-1 for indefinitely)
   final int rounds;
 
+  // Whether this task affects only one person or the whole group.
+  final bool isPersonal;
+
   /// Whether only one task from the originId can be active.
   final bool isUnique;
 
@@ -23,6 +26,7 @@ class Task {
     this.text,
     this.uses,
     this.rounds,
+    this.isPersonal,
     this.isUnique,
   });
 

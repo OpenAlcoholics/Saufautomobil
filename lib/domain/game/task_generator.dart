@@ -42,6 +42,7 @@ class TaskGenerator {
       text: _processText(spec.text),
       uses: spec.uses,
       rounds: spec.rounds,
+      isPersonal: spec.personal,
       isUnique: spec.unique,
     );
   }

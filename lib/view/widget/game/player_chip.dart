@@ -15,7 +15,8 @@ class PlayerChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Chip(
       label: Text(player),
-      backgroundColor: isActive ? SamColors.activePlayerHighlight : Colors.transparent,
+      backgroundColor:
+          isActive ? SamColors.activePlayerHighlight : Colors.transparent,
     );
   }
 }

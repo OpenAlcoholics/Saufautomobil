@@ -19,6 +19,9 @@ class TaskSpec {
   /// Whether this task works remotely
   final bool remote;
 
+  /// Whether the task affects one person or the whole group.
+  final bool personal;
+
   /// Whether only one instance of this task may be active
   final bool unique;
 
@@ -28,10 +31,12 @@ class TaskSpec {
     this.uses,
     this.rounds,
     this.remote,
+    this.personal,
     this.unique,
   });
 
-  factory TaskSpec.fromJson(Map<String, dynamic> json) => _$TaskSpecFromJson(json);
+  factory TaskSpec.fromJson(Map<String, dynamic> json) =>
+      _$TaskSpecFromJson(json);
 
   @override
   String toString() {

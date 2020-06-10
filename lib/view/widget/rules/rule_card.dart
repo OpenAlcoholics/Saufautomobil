@@ -24,7 +24,7 @@ class RuleCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    rule.player,
+                    rule.player ?? context.messages.common.everyone,
                     style: TextStyle(
                       inherit: true,
                       fontWeight: FontWeight.bold,

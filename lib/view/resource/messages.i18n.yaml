@@ -7,6 +7,7 @@ common:
   dismiss: Ausblenden
   edit: Bearbeiten
   errorNoTasks: Aufgaben konnten nicht geladen werden
+  everyone: Alle
 
 page:
   player: Spieler wählen

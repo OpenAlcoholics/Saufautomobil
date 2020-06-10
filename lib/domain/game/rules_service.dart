@@ -7,8 +7,9 @@ class RulesService {
   Future<void> deleteWherePlayer(List<String> players) async {
     final activeRules = service<GameState>().activeRules;
     final oldRules = activeRules.lastValue;
-    final removedRules =
-        oldRules.where((rule) => players.contains(rule.player)).toSet();
+    final removedRules = oldRules
+        .where((rule) => rule != null && players.contains(rule.player))
+        .toSet();
     final newRules = oldRules.toList();
     newRules.removeWhere((rule) => removedRules.contains(rule));
     activeRules.addValue(newRules);
@@ -44,7 +45,7 @@ class RulesService {
       final currentPlayer = state.players.lastValue[currentPlayerIndex];
       final rule = Rule(
         task,
-        player: currentPlayer,
+        player: task.isPersonal ? currentPlayer : null,
         untilRound: task.rounds == -1 ? -1 : round + task.rounds,
       );
 
