@@ -14,12 +14,19 @@ class RemainingRounds extends StatelessWidget {
     return StatefulStreamBuilder(
       stream: stream,
       builder: (context, child, int currentRound) {
-        final remaining = untilRound - currentRound;
         return Text(
-          remaining.toString(),
+          _calcRemaining(untilRound, currentRound),
           textScaleFactor: 2,
         );
       },
     );
+  }
+
+  String _calcRemaining(int untilRound, int currentRound) {
+    if (untilRound == -1) {
+      return " ";
+    }
+    final remaining = untilRound - currentRound;
+    return remaining.toString();
   }
 }
