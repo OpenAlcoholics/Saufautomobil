@@ -13,7 +13,8 @@ class GameTitle extends StatelessWidget {
       stream: stream,
       builder: (context, _, currentRound) {
         return Text(context.messages.page.gameOngoing(
-          currentRound,
+          // Do a +1 to hide the 0-based index
+          currentRound + 1,
           taskCount,
         ));
       },
