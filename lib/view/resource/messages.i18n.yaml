@@ -13,7 +13,7 @@ page:
   player: Spieler wählen
   rules: Aktive Regeln
   game: Saufautomobil
-  gameOngoing(int taskCount, int totalTaskCount): $game | $taskCount von $totalTaskCount
+  gameOngoing({int taskCount, int roundCount}): Runde $roundCount | Aufgabe $taskCount
 
 rules:
   noActive: Keine aktiven Regeln

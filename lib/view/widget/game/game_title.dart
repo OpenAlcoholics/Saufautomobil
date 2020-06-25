@@ -7,16 +7,20 @@ class GameTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameState = service<GameState>();
-    final taskCount = gameState.tasks.lastValue.length;
-    final stream = gameState.currentTurn;
+    final turnStream = gameState.currentTurn;
+    final roundStream = gameState.currentRound;
     return StatefulStreamBuilder(
-      stream: stream,
-      builder: (context, _, currentRound) {
-        return Text(context.messages.page.gameOngoing(
-          // Do a +1 to hide the 0-based index
-          currentRound + 1,
-          taskCount,
-        ));
+      stream: turnStream,
+      builder: (context, _, currentTurn) {
+        return StatefulStreamBuilder(
+            stream: roundStream,
+            builder: (context, _, currentRound) {
+              return Text(context.messages.page.gameOngoing(
+                // Do a +1 to hide the 0-based index
+                taskCount: currentTurn + 1,
+                roundCount: currentRound + 1,
+              ));
+            });
       },
     );
   }
