@@ -1,0 +1,43 @@
+common:
+  appName: Saufautomat
+  retry: Erneut versuchen
+  pleaseWait: Bitte warten
+  genericError: Ein Fehler ist aufgetreten
+  errorBlank: Darf nicht leer sein
+  submit: Fertig
+  dismiss: Ausblenden
+  edit: Bearbeiten
+  errorNoTasks: Aufgaben konnten nicht geladen werden
+  everyone: Alle
+
+page:
+  player: Spieler wählen
+  rules: Aktive Regeln
+  game: Saufautomobil
+  gameOngoing({required int taskCount, required int roundCount}): Runde $roundCount | Aufgabe $taskCount
+
+rules:
+  noActive: Keine aktiven Regeln
+  remainingRounds(int rounds): "Verbleibende Runden: $rounds"
+
+bottom:
+  game: Spiel
+  rules: Aktive Aufgaben
+  players: Spieler
+
+action:
+  editPlayers: Spieler bearbeiten
+  resetGame: Spiel beenden
+  advance: Nächste Aufgabe
+
+player:
+  nameInputHint: Spielernamen eingeben
+  duplicate: Spieler existiert bereits!
+
+dialog:
+  ok: OK
+  cancel: Abbrechen
+
+init:
+  resume: Fortfahren
+  newGame: Neues Spiel

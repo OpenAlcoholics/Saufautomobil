@@ -1,0 +1,52 @@
+name: Android
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+      - name: Run flutter doctor
+        run: flutter doctor
+      - name: Check out repo
+        uses: actions/checkout@v1
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Save key password
+        run: echo $key_pass > android/key.properties
+        env:
+          key_pass: ${{ secrets.key_pass }}
+      - name: Run code generation
+        run: flutter pub run build_runner build
+      - name: Build app
+        run: flutter build appbundle --release
+      - name: Save app bundle
+        uses: actions/upload-artifact@v1
+        with:
+          name: appbundle
+          path: build/app/outputs/bundle/release/app-release.aab
+  deploy:
+    name: Deploy to Play Store
+    runs-on: macos-latest
+    needs: build
+    if: "startsWith( github.ref, 'refs/tags/v' )"
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v1
+      - name: Retrieve app bundle
+        uses: actions/download-artifact@v1
+        with:
+          name: appbundle
+          path: android
+      - name: Save console api token
+        run: echo $console_json > android/google_console_api.json
+        env:
+          console_json: ${{ secrets.google_console_api }}
+      - name: Run fastlane
+        run: |
+          cd android
+          export SUPPLY_AAB="app-release.aab"
+          fastlane supply
