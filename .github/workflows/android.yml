@@ -2,6 +2,23 @@ name: Android
 on: [push]
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+      - name: Run flutter doctor
+        run: flutter doctor
+      - name: Check out repo
+        uses: actions/checkout@v1
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Run code generation
+        run: flutter pub run build_runner build
+      - name: Run tests
+        run: flutter test --no-pub
   build:
     name: Build
     runs-on: ubuntu-latest
