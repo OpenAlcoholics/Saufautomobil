@@ -6,8 +6,8 @@ import '../../test_infrastructure.dart';
 
 void main() {
   final service = configureDependencies()<CardSpecServiceGithub>();
-  test("Call does not throw exception", () async {
-    await service();
+  test("Call does not throw exception", () {
+    expect(service(), completes);
   });
   group("The cards", () {
     List<CardSpecDto> cards = [];
@@ -17,9 +17,13 @@ void main() {
 
     test("are not null", () => expect(cards, isNotNull));
     test("exist", () => expect(cards.length, greaterThan(0)));
+    test(
+      "are in an immutable list",
+      () => expect(() => cards.removeAt(0), throwsUnsupportedError),
+    );
     test("can be converted to model", () {
       for (final card in cards) {
-        card.toModel();
+        expect(() => card.toModel(), returnsNormally);
       }
     });
   });
