@@ -17,5 +17,10 @@ void main() {
 
     test("are not null", () => expect(cards, isNotNull));
     test("exist", () => expect(cards.length, greaterThan(0)));
+    test("can be converted to model", () {
+      for (final card in cards) {
+        card.toModel();
+      }
+    });
   });
 }

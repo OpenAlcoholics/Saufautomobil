@@ -1,3 +1,5 @@
+import 'package:sam/domain/model/card_spec.dart';
+
 class CardSpecDto {
   final String text;
   final int count;
@@ -18,6 +20,19 @@ class CardSpecDto {
     required this.unique,
     required this.id,
   });
+
+  CardSpec toModel() {
+    return CardSpec(
+      id: id.toString(),
+      text: text,
+      count: count,
+      uses: uses,
+      rounds: rounds,
+      remote: remote,
+      personal: personal,
+      unique: unique,
+    );
+  }
 }
 
 abstract class CardSpecService {
