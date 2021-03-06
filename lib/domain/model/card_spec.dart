@@ -1,5 +1,5 @@
 class CardSpec {
-  /// The card ID
+  /// The card spec ID
   final String id;
 
   /// The card text. It may contain {int} as a placeholder for a random number.
@@ -17,13 +17,13 @@ class CardSpec {
   final int rounds;
 
   /// Whether this card works remotely
-  final bool remote;
+  final bool isRemote;
 
   /// Whether the card affects one person or the whole group.
-  final bool personal;
+  final bool isPersonal;
 
   /// Whether only one instance of this card may be active.
-  final bool unique;
+  final bool isUnique;
 
   CardSpec({
     required this.id,
@@ -31,8 +31,8 @@ class CardSpec {
     required this.count,
     required this.uses,
     required this.rounds,
-    required this.remote,
-    required this.personal,
-    required this.unique,
+    required this.isRemote,
+    required this.isPersonal,
+    required this.isUnique,
   });
 }

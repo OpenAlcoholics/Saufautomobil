@@ -28,9 +28,9 @@ class CardSpecDto {
       count: count,
       uses: uses,
       rounds: rounds,
-      remote: remote,
-      personal: personal,
-      unique: unique,
+      isRemote: remote,
+      isPersonal: personal,
+      isUnique: unique,
     );
   }
 }
