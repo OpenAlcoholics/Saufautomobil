@@ -118,7 +118,7 @@ void main() {
 }
 
 User _createUser() {
-  return User(name: "user-name");
+  return User.create(name: "user-name");
 }
 
 Card _createCard({
