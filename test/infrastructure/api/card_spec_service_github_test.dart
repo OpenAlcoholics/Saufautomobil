@@ -4,8 +4,9 @@ import 'package:test/test.dart';
 
 import '../../test_infrastructure.dart';
 
-void main() {
-  final service = configureDependencies()<CardSpecServiceGithub>();
+Future<void> main() async {
+  final getIt = await configureDependencies();
+  final service = getIt<CardSpecServiceGithub>();
   test("Call does not throw exception", () {
     expect(service(), completes);
   });
