@@ -1,11 +1,16 @@
 class User {
   final String name;
-  bool _isActive;
-
-  bool get isActive => _isActive;
+  final bool isActive;
 
   User({
     required this.name,
-    bool isActive = true,
-  }) : this._isActive = isActive;
+    this.isActive = true,
+  });
+
+  User withActive(bool isActive) {
+    return User(
+      name: name,
+      isActive: isActive,
+    );
+  }
 }

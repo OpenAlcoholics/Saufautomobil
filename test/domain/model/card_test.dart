@@ -25,6 +25,7 @@ void main() {
       final card = _createCard();
       final user = _createUser();
       expect(() => card.makeConcrete(user, "Drink 10!"), returnsNormally);
+      expect(card.state, CardState.Blank);
     },
   );
 
@@ -33,9 +34,8 @@ void main() {
     late User user;
 
     setUp(() {
-      card = _createCard();
       user = _createUser();
-      card.makeConcrete(user, "Drink 10!");
+      card = _createCard().makeConcrete(user, "Drink 10!");
     });
 
     test(
@@ -52,8 +52,10 @@ void main() {
     );
     test("has no note", () => expect(card.note, isNull));
     test("can set note", () {
-      expect(() => card.setNote("Test"), returnsNormally);
-      expect(card.note, equals("Test"));
+      final noteText = "Test";
+      final newCard = card.setNote(noteText);
+      expect(card.note, isNull);
+      expect(newCard.note, equals(noteText));
     });
     test("can't set invalid note", () {
       expect(() => card.setNote(""), throwsArgumentError);
@@ -67,9 +69,8 @@ void main() {
     late User user;
 
     setUp(() {
-      card = _createCard(uses: 2);
       user = _createUser();
-      card.makeConcrete(user, "Drink 10!");
+      card = _createCard(uses: 2).makeConcrete(user, "Drink 10!");
     });
 
     test(
@@ -86,23 +87,28 @@ void main() {
     );
 
     test("can be used", () {
-      expect(() => card.use(), returnsNormally);
-      expect(card.uses, 1);
-      expect(card.state, CardState.Usable);
+      final usedCard = card.use();
+      expect(card.uses, 2);
+      expect(usedCard.uses, 1);
+      expect(usedCard.state, CardState.Usable);
     });
 
     test("can be used up", () {
-      card.use();
-      expect(() => card.use(), returnsNormally);
-      expect(card.uses, 0);
-      expect(card.state, CardState.Concrete);
-      expect(() => card.use(), throwsStateError);
+      final usedCard = card.use().use();
+      expect(card.uses, 2);
+      expect(card.state, CardState.Usable);
+
+      expect(usedCard.uses, 0);
+      expect(usedCard.state, CardState.Concrete);
+      expect(() => usedCard.use(), throwsStateError);
     });
 
     test("has no note", () => expect(card.note, isNull));
     test("can set note", () {
-      expect(() => card.setNote("Test"), returnsNormally);
-      expect(card.note, equals("Test"));
+      final noteText = "Test";
+      final newCard = card.setNote(noteText);
+      expect(card.note, isNull);
+      expect(newCard.note, equals(noteText));
     });
     test("can't set invalid note", () {
       expect(() => card.setNote(""), throwsArgumentError);
@@ -124,7 +130,7 @@ Card _createCard({
   uses: 0,
   rounds: 0,
 }) {
-  return Card(
+  return Card.create(
     id: id,
     specId: specId,
     textTemplate: textTemplate,
