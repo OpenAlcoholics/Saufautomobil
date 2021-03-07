@@ -67,6 +67,10 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.useIR = true
+}
+
 flutter {
     source '../..'
 }
