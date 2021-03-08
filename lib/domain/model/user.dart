@@ -31,6 +31,14 @@ class User {
     );
   }
 
+  User changeName(String name) {
+    return User._(
+      id: id,
+      name: name,
+      isActive: isActive,
+    );
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

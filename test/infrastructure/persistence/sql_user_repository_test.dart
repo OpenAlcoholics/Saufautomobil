@@ -1,7 +1,9 @@
 import 'package:sam/domain/model/user.dart';
+import 'package:sam/domain/persistence/exception.dart';
 import 'package:sam/infrastructure/persistence/sql_user_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../test_infrastructure.dart';
 
@@ -17,14 +19,62 @@ Future<void> main() async {
     await database.close();
   });
 
-  test("insert works", () async {
-    final user = _createUser();
-    await expectLater(repo.insertUser(user), completes);
-    final dbUser = await repo.findUser(user.id);
-    expect(user, dbUser);
+  group("before insert", () {
+    test("insert and find work", () async {
+      final user = _createUser();
+      await expectLater(repo.insertUser(user), completes);
+      final dbUser = await repo.findUser(user.id);
+      expect(user, dbUser);
+    });
+    test("find returns null", () {
+      final id = Uuid().v4();
+      expect(repo.findUser(id), completion(isNull));
+    });
+    test(
+      "getUsers is empty",
+      () => expect(repo.getUsers(), completion(isEmpty)),
+    );
+    test("delete works", () {
+      final id = Uuid().v4();
+      expect(repo.deleteUser(id), completes);
+    });
   });
-  test("getUsers is empty", () => expect(repo.getUsers(), completion(isEmpty)));
-  // TODO: add more tests
+
+  group("after insert", () {
+    User userA = _createUser(name: "test-user-a");
+    User userB = _createUser(name: "test-user-b");
+    setUp(() async {
+      await repo.insertUser(userA);
+      await repo.insertUser(userB);
+    });
+
+    test("duplicate insert fails", () {
+      expect(repo.insertUser(userA), throwsA(isA<DuplicateException>()));
+    });
+
+    test("getUsers contains users", () {
+      expect(repo.getUsers(), completion({userA, userB}));
+    });
+    test("findUser finds the correct user", () {
+      expect(repo.findUser(userA.id), completion(userA));
+    });
+
+    test("update name works", () async {
+      final updated = userA.changeName("new-name");
+      await repo.updateUser(updated);
+      expect(repo.getUsers(), completion({userB, updated}));
+    });
+    test("update active works", () async {
+      final updated = userA.withActive(false);
+      await repo.updateUser(updated);
+      expect(repo.getUsers(), completion({userB, updated}));
+    });
+
+    test("delete works", () async {
+      await expectLater(repo.deleteUser(userA.id), completes);
+      expect(repo.getUsers(), completion({userB}));
+    });
+  });
 }
 
 User _createUser({
