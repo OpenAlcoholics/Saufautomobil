@@ -35,4 +35,34 @@ class CardSpec {
     required this.isPersonal,
     required this.isUnique,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CardSpec &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          text == other.text &&
+          count == other.count &&
+          uses == other.uses &&
+          rounds == other.rounds &&
+          isRemote == other.isRemote &&
+          isPersonal == other.isPersonal &&
+          isUnique == other.isUnique;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      text.hashCode ^
+      count.hashCode ^
+      uses.hashCode ^
+      rounds.hashCode ^
+      isRemote.hashCode ^
+      isPersonal.hashCode ^
+      isUnique.hashCode;
+
+  @override
+  String toString() {
+    return '{id: $id, text: $text}';
+  }
 }

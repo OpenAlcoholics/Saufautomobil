@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../test_infrastructure.dart';
 
-Future<void> main() async {
+void main() {
   late Database database;
   late SqlUserRepository repo;
   setUp(() async {

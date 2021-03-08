@@ -18,12 +18,12 @@ class UserRepositoryMigrator implements RepositoryMigrator {
   UserRepositoryMigrator(this._logger);
 
   Future<void> create(Batch batch) async {
-    _logger.i("Creating database");
+    _logger.i("Creating table");
     batch.execute("""
     CREATE TABLE $TABLE_NAME (
       $COLUMN_ID TEXT PRIMARY KEY,
-      $COLUMN_NAME TEXT,
-      $COLUMN_ACTIVE INTEGER
+      $COLUMN_NAME TEXT NOT NULL,
+      $COLUMN_ACTIVE INTEGER NOT NULL
       )
     """);
   }
