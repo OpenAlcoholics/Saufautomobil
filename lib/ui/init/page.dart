@@ -8,7 +8,9 @@ class InitPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(context.messages.page.game),
+      ),
       body: Initializer(
         nextPage: PlaceholderPage(),
       ),

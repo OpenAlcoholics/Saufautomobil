@@ -4,7 +4,7 @@ import 'package:sam/domain/model/user.dart';
 import 'package:sam/domain/persistence/exception.dart';
 import 'package:sam/domain/persistence/user_repository.dart';
 import 'package:sam/infrastructure/persistence/migration.dart';
-import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite/sqflite.dart';
 
 const tableName = 'user';
 const columnId = 'id';

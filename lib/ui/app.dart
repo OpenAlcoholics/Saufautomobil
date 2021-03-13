@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         builder: (context) => MaterialApp(
           title: context.messages.common.appName,
           theme: ThemeData(
+            backgroundColor: SamColors.primary,
             primaryTextTheme: Typography.blackMountainView.apply(
               displayColor: SamColors.primaryText,
               bodyColor: SamColors.primaryText,

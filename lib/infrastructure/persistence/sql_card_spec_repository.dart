@@ -5,7 +5,6 @@ import 'package:sam/domain/persistence/card_spec_repository.dart';
 import 'package:sam/domain/persistence/exception.dart';
 import 'package:sam/infrastructure/persistence/migration.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common/sqlite_api.dart';
 
 const tableName = 'card_specs';
 const columnId = 'id';

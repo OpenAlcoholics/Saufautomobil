@@ -1,5 +1,5 @@
 common:
-  appName: Saufautomat
+  appName: Saufautomobil
   retry: Erneut versuchen
   pleaseWait: Bitte warten
   genericError: Ein Fehler ist aufgetreten
@@ -11,6 +11,7 @@ common:
   everyone: Alle
 
 page:
+  init: $game
   player: Spieler wählen
   rules: Aktive Regeln
   game: Saufautomobil
