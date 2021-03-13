@@ -346,7 +346,7 @@ packages:
     source: hosted
     version: "4.0.2"
   lint:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: lint
       url: "https://pub.dartlang.org"
@@ -374,7 +374,7 @@ packages:
     source: hosted
     version: "0.12.10"
   meta:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: meta
       url: "https://pub.dartlang.org"

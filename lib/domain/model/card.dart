@@ -1,5 +1,5 @@
+import 'package:meta/meta.dart';
 import 'package:sam/domain/model/user.dart';
-import 'package:sam/domain/util/annotations.dart';
 
 enum CardState {
   blank,

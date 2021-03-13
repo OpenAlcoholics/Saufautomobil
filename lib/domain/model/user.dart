@@ -1,4 +1,4 @@
-import 'package:sam/domain/util/annotations.dart';
+import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
 @immutable

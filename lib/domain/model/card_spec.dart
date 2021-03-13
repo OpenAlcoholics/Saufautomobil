@@ -1,4 +1,4 @@
-import 'package:sam/domain/util/annotations.dart';
+import 'package:meta/meta.dart';
 
 @immutable
 class CardSpec {
@@ -28,7 +28,7 @@ class CardSpec {
   /// Whether only one instance of this card may be active.
   final bool isUnique;
 
-  const CardSpec({
+  CardSpec({
     required this.id,
     required this.text,
     required this.count,
