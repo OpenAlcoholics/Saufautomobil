@@ -99,11 +99,22 @@ class _ResumeGameButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _LoadingButtonOld<GameState, void>(
-      text: context.messages.init.resume,
-      loading: gameState,
-      onPressed: (value) => _resumeGame(context, value),
-    );
+    switch (gameState.state) {
+      case LoadingState.loading:
+        return _LoadingButton(
+          text: context.messages.init.resume,
+          isLoading: true,
+        );
+      case LoadingState.error:
+        throw StateError('Did not expect to get errors from gameState');
+      case LoadingState.success:
+        final value = gameState.value;
+        return _LoadingButton(
+          text: context.messages.init.resume,
+          isLoading: false,
+          onPressed: value == null ? null : () => _resumeGame(context, value),
+        );
+    }
   }
 }
 
@@ -144,56 +155,5 @@ class _LoadingButton extends StatelessWidget {
     } else {
       return text;
     }
-  }
-}
-
-@deprecated
-class _LoadingButtonOld<T, E> extends StatelessWidget {
-  final LoadingValue<T?, E> loading;
-  final String text;
-  final Function(T value) onPressed;
-
-  const _LoadingButtonOld({
-    required this.loading,
-    required this.text,
-    required this.onPressed,
-  }) : super();
-
-  Widget _createButtonContent(BuildContext context) {
-    final text = Text(this.text);
-    if (loading.isLoaded) {
-      return text;
-    } else {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          text,
-          const SizedBox(width: 4),
-          const SizedBox(
-            height: 12,
-            width: 12,
-            child: CircularProgressIndicator(strokeWidth: 2.0),
-          )
-        ],
-      );
-    }
-  }
-
-  Function()? _onPressed() {
-    if (loading.isLoaded) {
-      final value = loading.value;
-      if (value != null) {
-        return () => onPressed(value);
-      }
-    }
-    return null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: _onPressed(),
-      child: _createButtonContent(context),
-    );
   }
 }
