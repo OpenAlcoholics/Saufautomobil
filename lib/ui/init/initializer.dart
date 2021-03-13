@@ -23,8 +23,9 @@ class _InitializerState extends State<Initializer> {
     await configureDependencies();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (_) => widget.nextPage,
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => widget.nextPage,
+        transitionDuration: Duration.zero,
       ),
     );
   }
