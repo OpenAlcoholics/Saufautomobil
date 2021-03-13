@@ -31,9 +31,9 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v1
       - name: Check lib formatting
-        run: flutter format lib --set-exit-if-changed --dry-run
+        run: flutter format lib --set-exit-if-changed
       - name: Check lib formatting
-        run: flutter format test --set-exit-if-changed --dry-run
+        run: flutter format test --set-exit-if-changed
   lint:
     name: Lint
     runs-on: ubuntu-latest
