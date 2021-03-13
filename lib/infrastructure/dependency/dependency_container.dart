@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:sam/infrastructure/dependency/dependency_container.config.dart';
 
 @InjectableInit()
-void configureDependencies() => $initGetIt(
+Future<void> configureDependencies() => $initGetIt(
       GetIt.instance,
       environment: Environment.prod,
     );

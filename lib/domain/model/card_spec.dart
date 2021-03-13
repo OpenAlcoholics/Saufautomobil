@@ -28,7 +28,7 @@ class CardSpec {
   /// Whether only one instance of this card may be active.
   final bool isUnique;
 
-  CardSpec({
+  const CardSpec({
     required this.id,
     required this.text,
     required this.count,
