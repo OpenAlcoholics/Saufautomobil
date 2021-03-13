@@ -7,7 +7,7 @@ class LoadingValue<T> {
 
   T get value {
     if (isLoaded) {
-      return _value!;
+      return _value as T;
     } else {
       throw StateError("Can't get value if isLoaded is false");
     }

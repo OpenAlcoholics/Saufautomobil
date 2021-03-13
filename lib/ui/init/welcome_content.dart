@@ -64,11 +64,10 @@ class _NewGameButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: configuration.isLoaded
-          ? () => _startNewGame(context, configuration.value)
-          : null,
-      child: Text(context.messages.init.newGame),
+    return _LoadingButton<GameConfiguration>(
+      text: context.messages.init.newGame,
+      loading: configuration,
+      onPressed: (value) => _startNewGame(context, value),
     );
   }
 }
@@ -84,9 +83,30 @@ class _ResumeGameButton extends StatelessWidget {
     ));
   }
 
-  Widget _createButtonContent(BuildContext context, bool isLoaded) {
-    final text = Text(context.messages.init.resume);
-    if (isLoaded) {
+  @override
+  Widget build(BuildContext context) {
+    return _LoadingButton<GameState>(
+      text: context.messages.init.resume,
+      loading: gameState,
+      onPressed: (value) => _resumeGame(context, value),
+    );
+  }
+}
+
+class _LoadingButton<T> extends StatelessWidget {
+  final LoadingValue<T?> loading;
+  final String text;
+  final Function(T value) onPressed;
+
+  const _LoadingButton({
+    required this.loading,
+    required this.text,
+    required this.onPressed,
+  }) : super();
+
+  Widget _createButtonContent(BuildContext context) {
+    final text = Text(this.text);
+    if (loading.isLoaded) {
       return text;
     } else {
       return Row(
@@ -104,13 +124,21 @@ class _ResumeGameButton extends StatelessWidget {
     }
   }
 
+  Function()? _onPressed() {
+    if (loading.isLoaded) {
+      final value = loading.value;
+      if(value != null) {
+        return () => onPressed(value);
+      }
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: gameState.isLoaded && gameState.value != null
-          ? () => _resumeGame(context, gameState.value!)
-          : null,
-      child: _createButtonContent(context, gameState.isLoaded),
+      onPressed: _onPressed(),
+      child: _createButtonContent(context),
     );
   }
 }

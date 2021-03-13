@@ -39,18 +39,47 @@ abstract class _WelcomeEvent {}
 
 class _InitEvent extends _WelcomeEvent {}
 
+class _GameConfigurationLoaded extends _WelcomeEvent {
+  final GameConfiguration configuration;
+
+  _GameConfigurationLoaded(this.configuration);
+}
+
+class _ResumableGameLoaded extends _WelcomeEvent {
+  final GameState? state;
+
+  _ResumableGameLoaded(this.state);
+}
+
 @injectable
 class WelcomeBloc extends Bloc<_WelcomeEvent, WelcomeState> {
   WelcomeBloc() : super(const WelcomeState.loading()) {
     add(_InitEvent());
   }
 
+  Future<void> _loadResumableGame() async {
+    add(_ResumableGameLoaded(null));
+  }
+
+  Future<void> _loadGameConfiguration() async {
+    add(_GameConfigurationLoaded(GameConfiguration(
+      specs: [],
+    )));
+  }
+
   @override
   Stream<WelcomeState> mapEventToState(_WelcomeEvent event) async* {
     if (event is _InitEvent) {
-      await Future.delayed(Duration(seconds: 5));
-      yield state.withValue(resumableState: LoadingValue.loaded(GameState()));
+      _loadResumableGame();
+      _loadGameConfiguration();
+    } else if (event is _GameConfigurationLoaded) {
+      yield state.withValue(
+        newGameConfig: LoadingValue.loaded(event.configuration),
+      );
+    } else if (event is _ResumableGameLoaded) {
+      yield state.withValue(
+        resumableState: LoadingValue.loaded(event.state),
+      );
     }
-    // TODO implement more
   }
 }
