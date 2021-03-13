@@ -1,6 +1,6 @@
 import 'package:sam/domain/model/user.dart';
 import 'package:sam/domain/persistence/exception.dart';
-import 'package:sam/infrastructure/persistence/sql_user_repository.dart';
+import 'package:sam/domain/persistence/user_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:test/test.dart';
 import 'package:uuid/uuid.dart';
@@ -9,11 +9,11 @@ import '../../test_infrastructure.dart';
 
 void main() {
   late Database database;
-  late SqlUserRepository repo;
+  late UserRepository repo;
   setUp(() async {
     final getIt = await configureDependencies();
     database = getIt<Database>();
-    repo = getIt<SqlUserRepository>();
+    repo = getIt<UserRepository>();
   });
   tearDown(() async {
     await database.close();

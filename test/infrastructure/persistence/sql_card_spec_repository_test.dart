@@ -1,6 +1,5 @@
 import 'package:sam/domain/model/card_spec.dart';
 import 'package:sam/domain/persistence/card_spec_repository.dart';
-import 'package:sam/infrastructure/persistence/sql_card_spec_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:test/test.dart';
 import 'package:uuid/uuid.dart';
@@ -13,7 +12,7 @@ void main() {
   setUp(() async {
     final getIt = await configureDependencies();
     database = getIt<Database>();
-    repo = getIt<SqlCardSpecRepository>();
+    repo = getIt<CardSpecRepository>();
   });
   tearDown(() async {
     await database.close();

@@ -1,12 +1,11 @@
 import 'package:sam/domain/api/card_spec_service.dart';
-import 'package:sam/infrastructure/api/card_spec_service_github.dart';
 import 'package:test/test.dart';
 
 import '../../test_infrastructure.dart';
 
 Future<void> main() async {
   final getIt = await configureDependencies();
-  final service = getIt<CardSpecServiceGithub>();
+  final service = getIt<CardSpecService>();
   test('Call does not throw exception', () {
     expect(service(), completes);
   });
