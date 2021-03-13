@@ -21,7 +21,7 @@ class MessagesProvider extends StatelessWidget {
     switch (languageCode) {
       case 'de':
       default:
-        return Messages();
+        return const Messages();
     }
   }
 }

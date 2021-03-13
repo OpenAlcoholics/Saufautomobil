@@ -19,58 +19,58 @@ void main() {
     await database.close();
   });
 
-  group("before insert", () {
-    test("insert and find work", () async {
+  group('before insert', () {
+    test('insert and find work', () async {
       final user = _createUser();
       await expectLater(repo.insertUser(user), completes);
       final dbUser = await repo.findUser(user.id);
       expect(user, dbUser);
     });
-    test("find returns null", () {
-      final id = Uuid().v4();
+    test('find returns null', () {
+      final id = const Uuid().v4();
       expect(repo.findUser(id), completion(isNull));
     });
     test(
-      "getUsers is empty",
+      'getUsers is empty',
       () => expect(repo.getUsers(), completion(isEmpty)),
     );
-    test("delete works", () {
-      final id = Uuid().v4();
+    test('delete works', () {
+      final id = const Uuid().v4();
       expect(repo.deleteUser(id), completes);
     });
   });
 
-  group("after insert", () {
-    User userA = _createUser(name: "test-user-a");
-    User userB = _createUser(name: "test-user-b");
+  group('after insert', () {
+    final User userA = _createUser(name: 'test-user-a');
+    final User userB = _createUser(name: 'test-user-b');
     setUp(() async {
       await repo.insertUser(userA);
       await repo.insertUser(userB);
     });
 
-    test("duplicate insert fails", () {
+    test('duplicate insert fails', () {
       expect(repo.insertUser(userA), throwsA(isA<DuplicateException>()));
     });
 
-    test("getUsers contains users", () {
+    test('getUsers contains users', () {
       expect(repo.getUsers(), completion({userA, userB}));
     });
-    test("findUser finds the correct user", () {
+    test('findUser finds the correct user', () {
       expect(repo.findUser(userA.id), completion(userA));
     });
 
-    test("update name works", () async {
-      final updated = userA.changeName("new-name");
+    test('update name works', () async {
+      final updated = userA.changeName('new-name');
       await repo.updateUser(updated);
       expect(repo.getUsers(), completion({userB, updated}));
     });
-    test("update active works", () async {
+    test('update active works', () async {
       final updated = userA.withActive(false);
       await repo.updateUser(updated);
       expect(repo.getUsers(), completion({userB, updated}));
     });
 
-    test("delete works", () async {
+    test('delete works', () async {
       await expectLater(repo.deleteUser(userA.id), completes);
       expect(repo.getUsers(), completion({userB}));
     });
@@ -78,9 +78,9 @@ void main() {
 }
 
 User _createUser({
-  String name = "test-name",
+  String name = 'test-name',
   String? id,
-  bool isActive: true,
+  bool isActive = true,
 }) {
   return User.create(
     name: name,

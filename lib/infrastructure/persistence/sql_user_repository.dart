@@ -6,10 +6,10 @@ import 'package:sam/domain/persistence/user_repository.dart';
 import 'package:sam/infrastructure/persistence/migration.dart';
 import 'package:sqflite/sqlite_api.dart';
 
-const TABLE_NAME = "user";
-const COLUMN_ID = "id";
-const COLUMN_NAME = "name";
-const COLUMN_ACTIVE = "active";
+const tableName = 'user';
+const columnId = 'id';
+const columnName = 'name';
+const columnActive = 'active';
 
 @injectable
 class UserRepositoryMigrator implements RepositoryMigrator {
@@ -17,23 +17,25 @@ class UserRepositoryMigrator implements RepositoryMigrator {
 
   UserRepositoryMigrator(this._logger);
 
+  @override
   Future<void> create(Batch batch) async {
-    _logger.i("Creating table");
-    batch.execute("""
-    CREATE TABLE $TABLE_NAME (
-      $COLUMN_ID TEXT PRIMARY KEY,
-      $COLUMN_NAME TEXT NOT NULL,
-      $COLUMN_ACTIVE INTEGER NOT NULL
+    _logger.i('Creating table');
+    batch.execute('''
+    CREATE TABLE $tableName (
+      $columnId TEXT PRIMARY KEY,
+      $columnName TEXT NOT NULL,
+      $columnActive INTEGER NOT NULL
       )
-    """);
+    ''');
   }
 
+  @override
   Future<void> upgrade(
     Batch batch,
     int oldVersion,
     int newVersion,
   ) async {
-    _logger.i("Updating table from version $oldVersion to $newVersion");
+    _logger.i('Updating table from version $oldVersion to $newVersion');
   }
 }
 
@@ -45,10 +47,10 @@ class SqlUserRepository implements UserRepository {
 
   SqlUserRepository(this._database, this._logger);
 
-  User _createUser(Map<String, dynamic?> values) {
-    final String id = values[COLUMN_ID];
-    final String name = values[COLUMN_NAME];
-    final bool isActive = values[COLUMN_ACTIVE] == 1;
+  User _createUser(Map<String, dynamic> values) {
+    final String id = values[columnId] as String;
+    final String name = values[columnName] as String;
+    final bool isActive = values[columnActive] == 1;
     return User.create(
       id: id,
       name: name,
@@ -60,8 +62,8 @@ class SqlUserRepository implements UserRepository {
   Future<User?> findUser(String userId) async {
     try {
       final result = await _database.query(
-        TABLE_NAME,
-        where: "$COLUMN_ID = ?",
+        tableName,
+        where: '$columnId = ?',
         whereArgs: [userId],
       );
       if (result.isEmpty) {
@@ -70,7 +72,7 @@ class SqlUserRepository implements UserRepository {
         return _createUser(result.first);
       }
     } on DatabaseException catch (e) {
-      _logger.e("Unexpected error", e);
+      _logger.e('Unexpected error', e);
       throw UnexpectedPersistenceException();
     }
   }
@@ -79,12 +81,12 @@ class SqlUserRepository implements UserRepository {
   Future<void> deleteUser(String userId) async {
     try {
       await _database.delete(
-        TABLE_NAME,
-        where: "$COLUMN_ID = ?",
+        tableName,
+        where: '$columnId = ?',
         whereArgs: [userId],
       );
     } on DatabaseException catch (e) {
-      _logger.e("Unexpected error", e);
+      _logger.e('Unexpected error', e);
       throw UnexpectedPersistenceException();
     }
   }
@@ -92,10 +94,10 @@ class SqlUserRepository implements UserRepository {
   @override
   Future<Set<User>> getUsers() async {
     try {
-      final result = await _database.query(TABLE_NAME);
+      final result = await _database.query(tableName);
       return result.map(_createUser).toSet();
     } on DatabaseException catch (e) {
-      _logger.e("Unexpected error", e);
+      _logger.e('Unexpected error', e);
       throw UnexpectedPersistenceException();
     }
   }
@@ -104,18 +106,18 @@ class SqlUserRepository implements UserRepository {
   Future<void> insertUser(User user) async {
     try {
       await _database.insert(
-        TABLE_NAME,
+        tableName,
         {
-          COLUMN_ID: user.id,
-          COLUMN_NAME: user.name,
-          COLUMN_ACTIVE: user.isActive ? 1 : 0,
+          columnId: user.id,
+          columnName: user.name,
+          columnActive: user.isActive ? 1 : 0,
         },
         conflictAlgorithm: ConflictAlgorithm.fail,
       );
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
-        _logger.e("Unexpected error", e);
-        throw DuplicateException("Tried to insert duplicate user: $user");
+        _logger.e('Unexpected error', e);
+        throw DuplicateException('Tried to insert duplicate user: $user');
       } else {
         throw UnexpectedPersistenceException();
       }
@@ -126,16 +128,16 @@ class SqlUserRepository implements UserRepository {
   Future<void> updateUser(User user) async {
     try {
       await _database.update(
-        TABLE_NAME,
+        tableName,
         {
-          COLUMN_ACTIVE: user.isActive ? 1 : 0,
-          COLUMN_NAME: user.name,
+          columnActive: user.isActive ? 1 : 0,
+          columnName: user.name,
         },
-        where: "$COLUMN_ID = ?",
+        where: '$columnId = ?',
         whereArgs: [user.id],
       );
     } on DatabaseException catch (e) {
-      _logger.e("Unexpected error", e);
+      _logger.e('Unexpected error', e);
       throw UnexpectedPersistenceException();
     }
   }

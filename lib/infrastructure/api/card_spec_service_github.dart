@@ -32,7 +32,7 @@ class _SerializableCardSpecDto extends CardSpecDto {
       _$_SerializableCardSpecDtoFromJson(json);
 }
 
-const _TASKS_URL =
+const _tasksUrl =
     'https://github.com/OpenAlcoholics/drinking-game-cards/raw/v1/tasks.json';
 
 @injectable
@@ -43,20 +43,24 @@ class CardSpecServiceGithub implements CardSpecService {
 
   CardSpecServiceGithub(this.logger, this.dio);
 
+  _SerializableCardSpecDto _createSerializableDto(dynamic input) {
+    return _SerializableCardSpecDto.fromJson(input as Map<String, dynamic>);
+  }
+
   @override
   Future<List<CardSpecDto>> call() async {
     try {
       // TODO: running IO in a compute() would be nice
-      final Response<List> response = await dio.get<List<dynamic>>(_TASKS_URL);
+      final response = await dio.get<List>(_tasksUrl);
       final result = response.data
-          ?.map((e) => _SerializableCardSpecDto.fromJson(e))
+          ?.map((e) => _createSerializableDto(e))
           .toList(growable: false);
       if (result == null) {
-        throw CardSpecServiceException("message");
+        throw CardSpecServiceException('message');
       }
       return result;
     } on DioError catch (e) {
-      logger.e("Could not retrieve tasks", e);
+      logger.e('Could not retrieve tasks', e);
       throw CardSpecServiceException(e.message);
     }
   }

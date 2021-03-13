@@ -25,10 +25,10 @@ class _JsonTransformer extends DefaultTransformer {
 }
 
 // Must be top-level function
-_parseAndDecode(String response) {
+dynamic _parseAndDecode(String response) {
   return jsonDecode(response);
 }
 
-_parseJson(String text) {
+Future _parseJson(String text) {
   return compute(_parseAndDecode, text);
 }

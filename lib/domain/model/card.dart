@@ -1,12 +1,14 @@
 import 'package:sam/domain/model/user.dart';
+import 'package:sam/domain/util/annotations.dart';
 
 enum CardState {
-  Blank,
-  Concrete,
-  TimedActive,
-  Usable,
+  blank,
+  concrete,
+  timedActive,
+  usable,
 }
 
+@immutable
 class Card {
   /// The card ID
   final String id;
@@ -28,7 +30,7 @@ class Card {
   final String? _text;
 
   String get text {
-    if (state == CardState.Blank) {
+    if (state == CardState.blank) {
       throw StateError("Blank cards don't have text");
     }
     return _text!;
@@ -37,7 +39,7 @@ class Card {
   final User? _user;
 
   User get user {
-    if (state == CardState.Blank) {
+    if (state == CardState.blank) {
       throw StateError("Blank cards don't have a user");
     }
     return _user!;
@@ -55,7 +57,7 @@ class Card {
 
   final String? note;
 
-  Card.create({
+  const Card.create({
     required this.id,
     required this.specId,
     required this.textTemplate,
@@ -63,12 +65,12 @@ class Card {
     required this.isUnique,
     required this.uses,
     required this.rounds,
-  })   : this.state = CardState.Blank,
-        this._text = null,
-        this._user = null,
-        this.note = null;
+  })   : state = CardState.blank,
+        _text = null,
+        _user = null,
+        note = null;
 
-  Card._({
+  const Card._({
     required this.id,
     required this.specId,
     required this.textTemplate,
@@ -80,8 +82,8 @@ class Card {
     required this.note,
     required String? text,
     required User? user,
-  })   : this._text = text,
-        this._user = user;
+  })   : _text = text,
+        _user = user;
 
   Card _copyWith({
     required int uses,
@@ -107,10 +109,10 @@ class Card {
   }
 
   Card makeConcrete(User user, String text) {
-    if (this.state != CardState.Blank) {
+    if (this.state != CardState.blank) {
       throw StateError("Can't make card in state ${this.state} concrete");
     }
-    final CardState state = uses > 0 ? CardState.Usable : CardState.Concrete;
+    final CardState state = uses > 0 ? CardState.usable : CardState.concrete;
 
     return _copyWith(
       uses: uses,
@@ -123,12 +125,12 @@ class Card {
   }
 
   Card setNote(String? note) {
-    if (state == CardState.Blank) {
+    if (state == CardState.blank) {
       throw StateError("Can't set note in state $state");
     }
 
     if (note != null && note.trim().isEmpty) {
-      throw ArgumentError.value(note, "note", "Can't be blank");
+      throw ArgumentError.value(note, 'note', "Can't be blank");
     }
 
     return _copyWith(
@@ -142,11 +144,11 @@ class Card {
   }
 
   Card use() {
-    if (this.state != CardState.Usable) {
+    if (this.state != CardState.usable) {
       throw StateError("Can't use card in state ${this.state}");
     }
     final uses = this.uses - 1;
-    final state = uses == 0 ? CardState.Concrete : CardState.Usable;
+    final state = uses == 0 ? CardState.concrete : CardState.usable;
     return _copyWith(
       uses: uses,
       rounds: rounds,

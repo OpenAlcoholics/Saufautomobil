@@ -6,7 +6,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'test_infrastructure.config.dart';
 
-@InjectableInit(generateForDir: ["lib", "test"])
+@InjectableInit(generateForDir: ['lib', 'test'])
 Future<GetIt> configureDependencies() => $initGetIt(
       GetIt.asNewInstance(),
       environment: Environment.test,

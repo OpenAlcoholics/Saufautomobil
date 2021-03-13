@@ -1,11 +1,13 @@
+import 'package:sam/domain/util/annotations.dart';
 import 'package:uuid/uuid.dart';
 
+@immutable
 class User {
   final String id;
   final String name;
   final bool isActive;
 
-  User._({
+  const User._({
     required this.id,
     required this.name,
     required this.isActive,
@@ -17,12 +19,13 @@ class User {
     String? id,
   }) {
     return User._(
-      id: id ?? Uuid().v4(),
+      id: id ?? const Uuid().v4(),
       name: name,
       isActive: isActive,
     );
   }
 
+  // ignore: avoid_positional_boolean_parameters
   User withActive(bool isActive) {
     return User._(
       id: id,

@@ -1,3 +1,6 @@
+import 'package:sam/domain/util/annotations.dart';
+
+@immutable
 class CardSpec {
   /// The card spec ID
   final String id;
@@ -25,7 +28,7 @@ class CardSpec {
   /// Whether only one instance of this card may be active.
   final bool isUnique;
 
-  CardSpec({
+  const CardSpec({
     required this.id,
     required this.text,
     required this.count,

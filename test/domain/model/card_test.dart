@@ -3,15 +3,15 @@ import 'package:sam/domain/model/user.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("Initially", () {
+  group('Initially', () {
     final card = _createCard();
 
-    test("has Blank state", () => expect(card.state, CardState.Blank));
-    test("has no text", () => expect(() => card.text, throwsStateError));
-    test("has no user", () => expect(() => card.user, throwsStateError));
+    test('has Blank state', () => expect(card.state, CardState.blank));
+    test('has no text', () => expect(() => card.text, throwsStateError));
+    test('has no user', () => expect(() => card.user, throwsStateError));
     test(
       "can't have notes",
-      () => expect(() => card.setNote("Note"), throwsStateError),
+      () => expect(() => card.setNote('Note'), throwsStateError),
     );
     test(
       "can't be used",
@@ -20,115 +20,115 @@ void main() {
   });
 
   test(
-    "can be made concrete",
+    'can be made concrete',
     () {
       final card = _createCard();
       final user = _createUser();
-      expect(() => card.makeConcrete(user, "Drink 10!"), returnsNormally);
-      expect(card.state, CardState.Blank);
+      expect(() => card.makeConcrete(user, 'Drink 10!'), returnsNormally);
+      expect(card.state, CardState.blank);
     },
   );
 
-  group("Concrete", () {
+  group('Concrete', () {
     late Card card;
     late User user;
 
     setUp(() {
       user = _createUser();
-      card = _createCard().makeConcrete(user, "Drink 10!");
+      card = _createCard().makeConcrete(user, 'Drink 10!');
     });
 
     test(
-      "has Concrete state",
-      () => expect(card.state, CardState.Concrete),
+      'has Concrete state',
+      () => expect(card.state, CardState.concrete),
     );
     test(
-      "has user",
+      'has user',
       () => expect(card.user, user),
     );
     test(
-      "has text",
-      () => expect(card.text, "Drink 10!"),
+      'has text',
+      () => expect(card.text, 'Drink 10!'),
     );
-    test("has no note", () => expect(card.note, isNull));
-    test("can set note", () {
-      final noteText = "Test";
+    test('has no note', () => expect(card.note, isNull));
+    test('can set note', () {
+      const noteText = 'Test';
       final newCard = card.setNote(noteText);
       expect(card.note, isNull);
       expect(newCard.note, equals(noteText));
     });
     test("can't set invalid note", () {
-      expect(() => card.setNote(""), throwsArgumentError);
-      expect(() => card.setNote(" "), throwsArgumentError);
+      expect(() => card.setNote(''), throwsArgumentError);
+      expect(() => card.setNote(' '), throwsArgumentError);
     });
     test("can't be used", () => expect(() => card.use(), throwsStateError));
   });
 
-  group("Usable", () {
+  group('Usable', () {
     late Card card;
     late User user;
 
     setUp(() {
       user = _createUser();
-      card = _createCard(uses: 2).makeConcrete(user, "Drink 10!");
+      card = _createCard(uses: 2).makeConcrete(user, 'Drink 10!');
     });
 
     test(
-      "has Usable state",
-      () => expect(card.state, CardState.Usable),
+      'has Usable state',
+      () => expect(card.state, CardState.usable),
     );
     test(
-      "has user",
+      'has user',
       () => expect(card.user, user),
     );
     test(
-      "has text",
-      () => expect(card.text, "Drink 10!"),
+      'has text',
+      () => expect(card.text, 'Drink 10!'),
     );
 
-    test("can be used", () {
+    test('can be used', () {
       final usedCard = card.use();
       expect(card.uses, 2);
       expect(usedCard.uses, 1);
-      expect(usedCard.state, CardState.Usable);
+      expect(usedCard.state, CardState.usable);
     });
 
-    test("can be used up", () {
+    test('can be used up', () {
       final usedCard = card.use().use();
       expect(card.uses, 2);
-      expect(card.state, CardState.Usable);
+      expect(card.state, CardState.usable);
 
       expect(usedCard.uses, 0);
-      expect(usedCard.state, CardState.Concrete);
+      expect(usedCard.state, CardState.concrete);
       expect(() => usedCard.use(), throwsStateError);
     });
 
-    test("has no note", () => expect(card.note, isNull));
-    test("can set note", () {
-      final noteText = "Test";
+    test('has no note', () => expect(card.note, isNull));
+    test('can set note', () {
+      const noteText = 'Test';
       final newCard = card.setNote(noteText);
       expect(card.note, isNull);
       expect(newCard.note, equals(noteText));
     });
     test("can't set invalid note", () {
-      expect(() => card.setNote(""), throwsArgumentError);
-      expect(() => card.setNote(" "), throwsArgumentError);
+      expect(() => card.setNote(''), throwsArgumentError);
+      expect(() => card.setNote(' '), throwsArgumentError);
     });
   });
 }
 
 User _createUser() {
-  return User.create(name: "user-name");
+  return User.create(name: 'user-name');
 }
 
 Card _createCard({
-  id: "test-id",
-  specId: "test-spec-id",
-  textTemplate: "Drink {int}!",
-  isPersonal: true,
-  isUnique: false,
-  uses: 0,
-  rounds: 0,
+  String id = 'test-id',
+  String specId = 'test-spec-id',
+  String textTemplate = 'Drink {int}!',
+  bool isPersonal = true,
+  bool isUnique = false,
+  int uses = 0,
+  int rounds = 0,
 }) {
   return Card.create(
     id: id,

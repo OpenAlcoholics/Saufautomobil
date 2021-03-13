@@ -7,22 +7,22 @@ import '../../test_infrastructure.dart';
 Future<void> main() async {
   final getIt = await configureDependencies();
   final service = getIt<CardSpecServiceGithub>();
-  test("Call does not throw exception", () {
+  test('Call does not throw exception', () {
     expect(service(), completes);
   });
-  group("The cards", () {
+  group('The cards', () {
     List<CardSpecDto> cards = [];
     setUpAll(() async {
       cards = await service();
     });
 
-    test("are not null", () => expect(cards, isNotNull));
-    test("exist", () => expect(cards.length, greaterThan(0)));
+    test('are not null', () => expect(cards, isNotNull));
+    test('exist', () => expect(cards.length, greaterThan(0)));
     test(
-      "are in an immutable list",
+      'are in an immutable list',
       () => expect(() => cards.removeAt(0), throwsUnsupportedError),
     );
-    test("can be converted to model", () {
+    test('can be converted to model', () {
       for (final card in cards) {
         expect(() => card.toModel(), returnsNormally);
       }
