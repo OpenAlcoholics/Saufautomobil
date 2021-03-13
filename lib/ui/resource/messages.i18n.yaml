@@ -42,3 +42,6 @@ dialog:
 init:
   resume: Fortfahren
   newGame: Neues Spiel
+  error:
+    parsingError: Konnte empfangene Spieldaten nicht verarbeiten.
+    ioError: Spieldaten konnten nicht geladen werden.

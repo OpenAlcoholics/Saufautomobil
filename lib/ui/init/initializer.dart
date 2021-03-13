@@ -1,9 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sam/domain/bloc/welcome.dart';
 import 'package:sam/infrastructure/dependency/dependency_container.dart';
 import 'package:sam/ui/common.dart';
-import 'package:sam/ui/init/welcome_content.dart';
-import 'package:sam/ui/widget/injected_bloc_provider.dart';
+import 'package:sam/ui/widget/welcome_content.dart';
 
 class Initializer extends StatefulWidget {
   final Widget nextPage;
@@ -15,8 +13,6 @@ class Initializer extends StatefulWidget {
 }
 
 class _InitializerState extends State<Initializer> {
-  bool _isInitialized = false;
-
   @override
   void initState() {
     super.initState();
@@ -25,27 +21,17 @@ class _InitializerState extends State<Initializer> {
 
   Future<void> _init() async {
     await configureDependencies();
-    setState(() {
-      _isInitialized = true;
-    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => widget.nextPage,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isInitialized) {
-      return InjectedBlocProvider<WelcomeBloc>(
-        child: Builder(
-          builder: (context) => BlocBuilder<WelcomeBloc, WelcomeState>(
-            bloc: Provider.of<WelcomeBloc>(context),
-            builder: (context, state) => WelcomeContent(
-              state: state,
-            ),
-          ),
-        ),
-      );
-    } else {
-      // ignore: prefer_const_constructors
-      return WelcomeContent(state: WelcomeState.loading());
-    }
+    // ignore: prefer_const_constructors
+    return WelcomeContent(state: WelcomeState.loading());
   }
 }

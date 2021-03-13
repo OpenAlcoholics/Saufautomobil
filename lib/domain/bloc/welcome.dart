@@ -54,6 +54,8 @@ class _GameConfigurationLoaded extends _WelcomeEvent {
   _GameConfigurationLoaded(this.configuration);
 }
 
+class RetryNewGame extends _WelcomeEvent {}
+
 class _ResumableGameLoaded extends _WelcomeEvent {
   final GameState? state;
 
@@ -96,6 +98,12 @@ class WelcomeBloc extends Bloc<_WelcomeEvent, WelcomeState> {
   Stream<WelcomeState> mapEventToState(_WelcomeEvent event) async* {
     if (event is _InitEvent) {
       _loadResumableGame();
+      _loadGameConfiguration();
+    } else if (event is RetryNewGame) {
+      yield state.withValue(
+        // ignore: prefer_const_constructors
+        newGameConfig: LoadingValue.loading(),
+      );
       _loadGameConfiguration();
     } else if (event is _GameConfigurationLoaded) {
       yield state.withValue(
