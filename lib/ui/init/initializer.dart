@@ -44,7 +44,8 @@ class _InitializerState extends State<Initializer> {
         ),
       );
     } else {
-      return const WelcomeContent(state: WelcomeState.loading());
+      // ignore: prefer_const_constructors
+      return WelcomeContent(state: WelcomeState.loading());
     }
   }
 }

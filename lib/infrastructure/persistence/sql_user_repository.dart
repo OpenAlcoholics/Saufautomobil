@@ -39,7 +39,6 @@ class UserRepositoryMigrator implements RepositoryMigrator {
   }
 }
 
-@injectable
 @Injectable(as: UserRepository)
 class SqlUserRepository implements UserRepository {
   final Database _database;

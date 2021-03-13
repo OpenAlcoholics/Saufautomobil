@@ -45,7 +45,6 @@ class CardSpecRepositoryMigrator implements RepositoryMigrator {
   }
 }
 
-@injectable
 @Injectable(as: CardSpecRepository)
 class SqlCardSpecRepository implements CardSpecRepository {
   final Database _database;

@@ -35,7 +35,6 @@ class _SerializableCardSpecDto extends CardSpecDto {
 const _tasksUrl =
     'https://github.com/OpenAlcoholics/drinking-game-cards/raw/v1/tasks.json';
 
-@injectable
 @Injectable(as: CardSpecService)
 class CardSpecServiceGithub implements CardSpecService {
   final Logger logger;
