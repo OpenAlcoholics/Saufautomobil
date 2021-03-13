@@ -62,7 +62,7 @@ class WelcomeBloc extends Bloc<_WelcomeEvent, WelcomeState> {
   }
 
   Future<void> _loadGameConfiguration() async {
-    add(_GameConfigurationLoaded(GameConfiguration(
+    add(_GameConfigurationLoaded(const GameConfiguration(
       specs: [],
     )));
   }

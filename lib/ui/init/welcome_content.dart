@@ -127,7 +127,7 @@ class _LoadingButton<T> extends StatelessWidget {
   Function()? _onPressed() {
     if (loading.isLoaded) {
       final value = loading.value;
-      if(value != null) {
+      if (value != null) {
         return () => onPressed(value);
       }
     }
