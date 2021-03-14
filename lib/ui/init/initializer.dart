@@ -1,7 +1,7 @@
 import 'package:sam/domain/model/loading_value.dart';
 import 'package:sam/infrastructure/dependency/dependency_container.dart';
 import 'package:sam/ui/common.dart';
-import 'package:sam/ui/widget/welcome_content.dart';
+import 'package:sam/ui/welcome/welcome_content.dart';
 
 class Initializer extends StatefulWidget {
   final Widget nextPage;

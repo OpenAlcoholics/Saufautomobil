@@ -12,6 +12,7 @@ common:
 
 page:
   init: $game
+  configuration: Einstellungen
   player: Spieler wählen
   rules: Aktive Regeln
   game: Saufautomobil
@@ -45,3 +46,14 @@ init:
   error:
     parsingError: Konnte empfangene Spieldaten nicht verarbeiten.
     ioError: Spieldaten konnten nicht geladen werden.
+
+config:
+  min:
+    name: Minimum Sips
+    description: The minimum amount of sips a player has to take for a single card.
+  max:
+    name: Maximum Sips
+    description: The maximum amount of sips a player has to take for a single card.
+  remote:
+    name: Remote Cards Only
+    description: Only show cards that can be used in a remote game.

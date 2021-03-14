@@ -1,11 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sam/domain/bloc/resumable_load.dart';
-import 'package:sam/domain/bloc/welcome.dart';
 import 'package:sam/domain/model/game_state.dart';
 import 'package:sam/domain/model/loading_value.dart';
 import 'package:sam/ui/common.dart';
+import 'package:sam/ui/welcome/welcome_content.dart';
 import 'package:sam/ui/widget/injected_bloc_provider.dart';
-import 'package:sam/ui/widget/welcome_content.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -34,41 +33,5 @@ class _WelcomeContentBuilder extends StatelessWidget {
     return BlocBuilder<ResumableLoad, LoadingValue<GameState?, void>>(
       builder: (context, state) => WelcomeContent(state: state),
     );
-  }
-}
-
-class _ErrorBanner extends StatelessWidget {
-  String _getMessage(ErrorInitMessages messages, CardSpecLoadingError error) {
-    switch (error) {
-      case CardSpecLoadingError.ioError:
-        return messages.ioError;
-      case CardSpecLoadingError.parsingError:
-        return messages.parsingError;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-    //
-    //   if (state.newGameConfig.state == LoadingState.error) {
-    //     final error = state.newGameConfig.error;
-    //     return MaterialBanner(
-    //       leading: const Icon(Icons.error),
-    //       content: Text(_getMessage(context.messages.init.error, error)),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             BlocProvider.of<WelcomeBloc>(context).add(RetryNewGame());
-    //           },
-    //           child: Text(context.messages.common.retry),
-    //         ),
-    //       ],
-    //     );
-    //   } else {
-    //     return Container();
-    //   }
-    // },
-    // );
   }
 }
