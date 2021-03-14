@@ -43,9 +43,11 @@ dialog:
 init:
   resume: Fortfahren
   newGame: Neues Spiel
-  error:
-    parsingError: Konnte empfangene Spieldaten nicht verarbeiten.
-    ioError: Spieldaten konnten nicht geladen werden.
+
+preparation:
+  fetchingSpecs: Lade Spielkarten herunter
+  creatingCards: Erstelle Spielkarten
+  error: Spieldaten konnten nicht geladen werden.
 
 config:
   min:

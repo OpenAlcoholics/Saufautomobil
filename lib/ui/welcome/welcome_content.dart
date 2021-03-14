@@ -1,8 +1,8 @@
 import 'package:sam/domain/model/game_state.dart';
 import 'package:sam/domain/model/loading_value.dart';
 import 'package:sam/ui/common.dart';
-import 'package:sam/ui/configuration/page.dart';
 import 'package:sam/ui/placeholder/page.dart';
+import 'package:sam/ui/preparation/page.dart';
 
 class WelcomeContent extends StatelessWidget {
   final LoadingValue<GameState?, void> state;
@@ -55,7 +55,7 @@ class _NewGameButton extends StatelessWidget {
 
   void _startNewGame(BuildContext context) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (_) => ConfigurationPage(),
+      builder: (_) => PreparationPage(),
     ));
   }
 

@@ -15,7 +15,9 @@ class _CreateCards implements _NewGameLoadEvent {
   _CreateCards(this.specs);
 }
 
-class Retry implements _NewGameLoadEvent {}
+class Retry implements _NewGameLoadEvent {
+  const Retry();
+}
 
 enum NewGameLoadStage {
   fetchingSpecs,
@@ -37,6 +39,7 @@ class NewGameLoad extends Bloc<_NewGameLoadEvent, NewGameLoadStage> {
   }
 
   Future<void> _createCards(Set<CardSpec> specs) async {
+    await Future.delayed(const Duration(seconds: 2));
     // TODO
   }
 
@@ -55,6 +58,7 @@ class NewGameLoad extends Bloc<_NewGameLoadEvent, NewGameLoadStage> {
       await _createCards(event.specs);
       yield NewGameLoadStage.success;
     } else if (event is Retry && state == NewGameLoadStage.error) {
+      yield NewGameLoadStage.fetchingSpecs;
       add(_InitEvent());
     }
   }
