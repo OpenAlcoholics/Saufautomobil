@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sam/domain/bloc/resumable_load.dart';
 import 'package:sam/domain/bloc/welcome.dart';
+import 'package:sam/domain/model/game_state.dart';
 import 'package:sam/domain/model/loading_value.dart';
 import 'package:sam/ui/common.dart';
 import 'package:sam/ui/widget/injected_bloc_provider.dart';
@@ -8,7 +10,7 @@ import 'package:sam/ui/widget/welcome_content.dart';
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return InjectedBlocProvider<WelcomeBloc>(
+    return injectedBlocProvider<ResumableLoad>(
       child: _Content(),
     );
   }
@@ -21,12 +23,7 @@ class _Content extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.messages.page.init),
       ),
-      body: Stack(
-        children: [
-          _ErrorBanner(),
-          _WelcomeContentBuilder(),
-        ],
-      ),
+      body: _WelcomeContentBuilder(),
     );
   }
 }
@@ -34,7 +31,7 @@ class _Content extends StatelessWidget {
 class _WelcomeContentBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WelcomeBloc, WelcomeState>(
+    return BlocBuilder<ResumableLoad, LoadingValue<GameState?, void>>(
       builder: (context, state) => WelcomeContent(state: state),
     );
   }
@@ -52,26 +49,26 @@ class _ErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WelcomeBloc, WelcomeState>(
-      builder: (context, state) {
-        if (state.newGameConfig.state == LoadingState.error) {
-          final error = state.newGameConfig.error;
-          return MaterialBanner(
-            leading: const Icon(Icons.error),
-            content: Text(_getMessage(context.messages.init.error, error)),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  BlocProvider.of<WelcomeBloc>(context).add(RetryNewGame());
-                },
-                child: Text(context.messages.common.retry),
-              ),
-            ],
-          );
-        } else {
-          return Container();
-        }
-      },
-    );
+    return Container();
+    //
+    //   if (state.newGameConfig.state == LoadingState.error) {
+    //     final error = state.newGameConfig.error;
+    //     return MaterialBanner(
+    //       leading: const Icon(Icons.error),
+    //       content: Text(_getMessage(context.messages.init.error, error)),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             BlocProvider.of<WelcomeBloc>(context).add(RetryNewGame());
+    //           },
+    //           child: Text(context.messages.common.retry),
+    //         ),
+    //       ],
+    //     );
+    //   } else {
+    //     return Container();
+    //   }
+    // },
+    // );
   }
 }

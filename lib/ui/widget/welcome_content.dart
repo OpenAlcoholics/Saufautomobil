@@ -1,12 +1,10 @@
-import 'package:sam/domain/bloc/welcome.dart';
-import 'package:sam/domain/model/game_configuration.dart';
 import 'package:sam/domain/model/game_state.dart';
 import 'package:sam/domain/model/loading_value.dart';
 import 'package:sam/ui/common.dart';
 import 'package:sam/ui/placeholder/page.dart';
 
 class WelcomeContent extends StatelessWidget {
-  final WelcomeState state;
+  final LoadingValue<GameState?, void> state;
 
   const WelcomeContent({required this.state}) : super();
 
@@ -36,7 +34,7 @@ class WelcomeContent extends StatelessWidget {
 }
 
 class _InitContinuationPanel extends StatelessWidget {
-  final WelcomeState state;
+  final LoadingValue<GameState?, void> state;
 
   const _InitContinuationPanel({required this.state}) : super();
 
@@ -44,19 +42,17 @@ class _InitContinuationPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _NewGameButton(state.newGameConfig),
-        _ResumeGameButton(state.resumableState),
+        const _NewGameButton(),
+        _ResumeGameButton(state),
       ],
     );
   }
 }
 
 class _NewGameButton extends StatelessWidget {
-  final LoadingValue<GameConfiguration, CardSpecLoadingError> configuration;
+  const _NewGameButton() : super();
 
-  const _NewGameButton(this.configuration) : super();
-
-  void _startNewGame(BuildContext context, GameConfiguration value) {
+  void _startNewGame(BuildContext context) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (_) => PlaceholderPage(),
     ));
@@ -64,25 +60,10 @@ class _NewGameButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (configuration.state) {
-      case LoadingState.loading:
-        return _LoadingButton(
-          text: context.messages.init.newGame,
-          isLoading: true,
-        );
-      case LoadingState.error:
-        return _LoadingButton(
-          text: context.messages.init.newGame,
-          isLoading: false,
-        );
-      case LoadingState.success:
-        final value = configuration.value;
-        return _LoadingButton(
-          text: context.messages.init.newGame,
-          isLoading: false,
-          onPressed: () => _startNewGame(context, value),
-        );
-    }
+    return ElevatedButton(
+      onPressed: () => _startNewGame(context),
+      child: Text(context.messages.init.newGame),
+    );
   }
 }
 

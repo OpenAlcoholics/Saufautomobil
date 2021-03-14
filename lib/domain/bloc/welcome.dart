@@ -9,11 +9,7 @@ import 'package:sam/domain/model/game_state.dart';
 import 'package:sam/domain/model/loading_value.dart';
 import 'package:sam/domain/persistence/card_spec_repository.dart';
 
-enum CardSpecLoadingError {
-  ioError,
-  parsingError,
-}
-
+@deprecated
 @immutable
 class WelcomeState {
   final LoadingValue<GameState?, void> resumableState;
@@ -62,7 +58,7 @@ class _ResumableGameLoaded extends _WelcomeEvent {
   _ResumableGameLoaded(this.state);
 }
 
-@injectable
+@deprecated
 class WelcomeBloc extends Bloc<_WelcomeEvent, WelcomeState> {
   final CardSpecLoader _loader;
 
@@ -115,6 +111,11 @@ class WelcomeBloc extends Bloc<_WelcomeEvent, WelcomeState> {
       );
     }
   }
+}
+
+enum CardSpecLoadingError {
+  ioError,
+  parsingError,
 }
 
 class _CardSpecLoadingException implements Exception {

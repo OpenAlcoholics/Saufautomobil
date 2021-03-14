@@ -1,4 +1,4 @@
-import 'package:sam/domain/bloc/welcome.dart';
+import 'package:sam/domain/model/loading_value.dart';
 import 'package:sam/infrastructure/dependency/dependency_container.dart';
 import 'package:sam/ui/common.dart';
 import 'package:sam/ui/widget/welcome_content.dart';
@@ -33,6 +33,6 @@ class _InitializerState extends State<Initializer> {
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
-    return WelcomeContent(state: WelcomeState.loading());
+    return WelcomeContent(state: const LoadingValue.loading());
   }
 }
